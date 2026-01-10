@@ -7,85 +7,151 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;700&display=swap');
-        body { font-family: 'Montserrat', sans-serif; background-color: #0f0f0f; color: white; }
-        .heading-font { font-family: 'Bebas Neue', cursive; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .gold-gradient { background: linear-gradient(45deg, #d4af37, #f9e076); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@500&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e5e5e5; scroll-behavior: smooth; }
+        .heading-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 3px; }
+        
+        /* Subtle Navbar */
+        .nav-link { position: relative; opacity: 0.6; transition: opacity 0.3s; font-size: 0.7rem; letter-spacing: 0.2em; }
+        .nav-link:hover { opacity: 1; }
+        
+        /* Premium Card Styling */
+        .service-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            transition: all 0.4s ease;
+        }
+        .service-card:hover { 
+            background: rgba(255, 255, 255, 0.07); 
+            transform: translateY(-10px);
+            border-color: #d4af37;
+        }
+
+        /* Chatbot Transition */
+        #chat-window { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: translateY(20px) scale(0.9); opacity: 0; pointer-events: none; }
+        #chat-window.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
     </style>
 </head>
 <body>
 
-    <nav class="fixed w-full z-50 px-8 py-6 flex justify-between items-center glass">
-        <h1 class="heading-font text-3xl tracking-widest gold-gradient">GROOMING LAB</h1>
-        <button class="bg-white text-black font-bold py-2 px-6 rounded-full hover:bg-yellow-500 transition-all duration-300">BOOK NOW</button>
+    <nav class="fixed w-full z-50 px-10 py-8 flex justify-between items-center">
+        <h1 class="heading-font text-xl font-bold text-white">GROOMING LAB</h1>
+        <div class="hidden md:flex space-x-12">
+            <a href="#services" class="nav-link">SERVICES</a>
+            <a href="#" class="nav-link">RESERVATIONS</a>
+            <a href="#" class="nav-link">STUDIO</a>
+        </div>
     </nav>
 
-    <section class="h-screen flex flex-col justify-center items-center text-center px-4" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1920&q=80') center/cover;">
-        <h2 data-aos="fade-up" data-aos-duration="1000" class="heading-font text-7xl md:text-9xl mb-4">Master Your Style</h2>
-        <p data-aos="fade-up" data-aos-delay="300" class="text-lg md:text-2xl text-gray-300 max-w-2xl">Premium haircuts, classic shaves, and luxury skin therapy for the modern man.</p>
-        <div data-aos="zoom-in" data-aos-delay="600" class="mt-8">
-            <a href="#services" class="border-2 border-white px-8 py-3 rounded-full hover:bg-white hover:text-black transition duration-300">EXPLORE SERVICES</a>
-        </div>
+    <section class="h-[80vh] flex flex-col justify-center items-center text-center px-4">
+        <h2 data-aos="zoom-out" data-aos-duration="1500" class="heading-font text-7xl md:text-9xl mb-4 text-white">THE STANDARD</h2>
+        <p data-aos="fade-up" data-aos-delay="400" class="text-xs tracking-[0.4em] text-zinc-500">EXCEPTIONAL GROOMING FOR THE MODERN MAN</p>
     </section>
 
-    <section id="services" class="py-24 px-8 max-w-7xl mx-auto">
-        <h2 class="heading-font text-5xl mb-16 text-center" data-aos="fade-right">Our Expertise</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <section id="services" class="py-20 px-8 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
-            <div class="glass p-4 rounded-2xl group" data-aos="fade-up" data-aos-delay="100">
-                <div class="overflow-hidden rounded-xl mb-6">
-                    <img src="https://i.pinimg.com/564x/0d/18/73/0d1873996726214f9d8569503673c090.jpg" alt="Haircut" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
+            <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
+                <div class="overflow-hidden rounded-xl mb-6 h-64">
+                    <img src="https://i.pinimg.com/564x/0d/18/73/0d1873996726214f9d8569503673c090.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
                 </div>
-                <h3 class="text-2xl font-bold mb-2 gold-gradient">The Signature Cut</h3>
-                <p class="text-gray-400 text-sm mb-4">Custom fades and classic styles tailored to your unique profile.</p>
-                <button class="text-xs tracking-widest font-bold border-b border-yellow-500 pb-1">BOOK FOR $40</button>
+                <h3 class="heading-font text-xl mb-2 text-white">Haircut</h3>
+                <p class="text-zinc-500 text-xs leading-relaxed mb-6">Expert tailoring and fades designed for your specific head shape.</p>
+                <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
+                    <span class="text-sm font-bold">$45</span>
+                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white transition">ENQUIRE</button>
+                </div>
             </div>
 
-            <div class="glass p-4 rounded-2xl group" data-aos="fade-up" data-aos-delay="200">
-                <div class="overflow-hidden rounded-xl mb-6">
-                    <img src="https://i.pinimg.com/564x/56/66/83/566683896593539744c01799298319f6.jpg" alt="Shave" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
+            <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
+                <div class="overflow-hidden rounded-xl mb-6 h-64">
+                    <img src="https://i.pinimg.com/564x/56/66/83/566683896593539744c01799298319f6.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
                 </div>
-                <h3 class="text-2xl font-bold mb-2 gold-gradient">Hot Towel Shave</h3>
-                <p class="text-gray-400 text-sm mb-4">Experience the ultimate relaxation with our traditional razor shave.</p>
-                <button class="text-xs tracking-widest font-bold border-b border-yellow-500 pb-1">BOOK FOR $30</button>
+                <h3 class="heading-font text-xl mb-2 text-white">Shave</h3>
+                <p class="text-zinc-500 text-xs leading-relaxed mb-6">A ritualistic hot towel shave using premium oils and a straight razor.</p>
+                <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
+                    <span class="text-sm font-bold">$35</span>
+                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white transition">ENQUIRE</button>
+                </div>
             </div>
 
-            <div class="glass p-4 rounded-2xl group" data-aos="fade-up" data-aos-delay="300">
-                <div class="overflow-hidden rounded-xl mb-6">
-                    <img src="https://i.pinimg.com/564x/a4/9e/f4/a49ef44671404169728514e820299616.jpg" alt="Beard" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
+            <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
+                <div class="overflow-hidden rounded-xl mb-6 h-64">
+                    <img src="https://i.pinimg.com/564x/a4/9e/f4/a49ef44671404169728514e820299616.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
                 </div>
-                <h3 class="text-2xl font-bold mb-2 gold-gradient">Beard Sculpt</h3>
-                <p class="text-gray-400 text-sm mb-4">Precision shaping and conditioning for a sharp, clean look.</p>
-                <button class="text-xs tracking-widest font-bold border-b border-yellow-500 pb-1">BOOK FOR $25</button>
+                <h3 class="heading-font text-xl mb-2 text-white">Beard</h3>
+                <p class="text-zinc-500 text-xs leading-relaxed mb-6">Sculpting, lining, and deep conditioning for the perfect beard profile.</p>
+                <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
+                    <span class="text-sm font-bold">$25</span>
+                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white transition">ENQUIRE</button>
+                </div>
             </div>
 
-            <div class="glass p-4 rounded-2xl group" data-aos="fade-up" data-aos-delay="400">
-                <div class="overflow-hidden rounded-xl mb-6">
-                    <img src="https://i.pinimg.com/564x/0f/6b/6b/0f6b6b77242866657805166418873238.jpg" alt="Detan" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
+            <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="400">
+                <div class="overflow-hidden rounded-xl mb-6 h-64">
+                    <img src="https://i.pinimg.com/564x/0f/6b/6b/0f6b6b77242866657805166418873238.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
                 </div>
-                <h3 class="text-2xl font-bold mb-2 gold-gradient">Detan Glow</h3>
-                <p class="text-gray-400 text-sm mb-4">Restore your skin's natural tone with our charcoal detan therapy.</p>
-                <button class="text-xs tracking-widest font-bold border-b border-yellow-500 pb-1">BOOK FOR $50</button>
+                <h3 class="heading-font text-xl mb-2 text-white">Detan</h3>
+                <p class="text-zinc-500 text-xs leading-relaxed mb-6">Revitalizing skin therapy to remove impurities and brighten skin tone.</p>
+                <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
+                    <span class="text-sm font-bold">$50</span>
+                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white transition">ENQUIRE</button>
+                </div>
             </div>
 
         </div>
     </section>
 
-    <div class="fixed bottom-10 right-10 z-50">
-        <button class="bg-yellow-500 text-black h-16 w-16 rounded-full shadow-2xl flex items-center justify-center font-bold hover:scale-110 transition-transform pulse">
-            BOOK
+    <div class="fixed bottom-8 right-8 z-[100]">
+        <div id="chat-window" class="absolute bottom-20 right-0 w-80 h-96 bg-zinc-900 border border-zinc-800 rounded-3xl flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-5 border-b border-zinc-800 flex justify-between items-center">
+                <span class="heading-font text-[10px] tracking-widest">Assistant</span>
+                <button onclick="toggleChat()" class="text-zinc-500 hover:text-white text-xl">&times;</button>
+            </div>
+            <div id="chat-content" class="flex-1 p-5 overflow-y-auto text-[13px] space-y-4">
+                <div class="bg-zinc-800 p-3 rounded-2xl rounded-tl-none">
+                    Welcome. Ask me about our services or type "Book" to start.
+                </div>
+            </div>
+            <div class="p-4 bg-zinc-950 flex gap-2">
+                <input id="chat-input" type="text" placeholder="How can we help?" class="flex-1 bg-transparent text-xs outline-none text-white px-2">
+                <button onclick="handleChat()" class="bg-white text-black px-4 py-2 rounded-full text-[10px] font-bold">SEND</button>
+            </div>
+        </div>
+
+        <button onclick="toggleChat()" class="bg-white text-black w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </button>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({
-            duration: 800,
-            offset: 100,
-            easing: 'ease-in-out',
-        });
+        AOS.init({ once: true });
+
+        function toggleChat() {
+            document.getElementById('chat-window').classList.toggle('active');
+        }
+
+        function handleChat() {
+            const input = document.getElementById('chat-input');
+            const content = document.getElementById('chat-content');
+            const text = input.value.toLowerCase();
+            if(!text.trim()) return;
+
+            content.innerHTML += `<div class="bg-zinc-700 p-3 rounded-2xl rounded-tr-none ml-10 text-right">${input.value}</div>`;
+            input.value = '';
+
+            setTimeout(() => {
+                let reply = "Our team will be with you shortly. For immediate booking, please call (555) 0123.";
+                if(text.includes('haircut')) reply = "Haircuts are $45. We specialize in fades, tapers, and classic scissor cuts.";
+                if(text.includes('shave')) reply = "Our hot towel shaves are $35 and include premium grooming products.";
+                if(text.includes('book')) reply = "To book, please provide your name and preferred date.";
+                
+                content.innerHTML += `<div class="bg-zinc-800 p-3 rounded-2xl rounded-tl-none mr-10">${reply}</div>`;
+                content.scrollTop = content.scrollHeight;
+            }, 600);
+        }
     </script>
 </body>
 </html>
