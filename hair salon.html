@@ -12,18 +12,18 @@
         body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e5e5e5; scroll-behavior: smooth; }
         .heading-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 4px; }
         
-        /* THE SMART NAVBAR FIX */
-        .nav-container { position: relative; width: 100px; height: 20px; display: flex; justify-content: center; align-items: center; }
+        /* NAVBAR SPACING FIX */
+        .nav-container { position: relative; width: 70px; height: 20px; display: flex; justify-content: center; align-items: center; }
         
         #nav-services, #nav-studio { 
             position: absolute; 
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
+            left: 0; /* Align to the left of the container for consistent spacing */
         }
 
         .link-active { opacity: 0.6; transform: translateY(0); pointer-events: auto; }
         .link-active:hover { opacity: 1; }
-        
         .link-hidden { opacity: 0; transform: translateY(10px); pointer-events: none; }
 
         /* Card Styling */
@@ -34,8 +34,8 @@
         }
         .service-card:hover { transform: translateY(-15px); border-color: #d4af37; background: rgba(255, 255, 255, 0.08); }
 
-        /* Video Background */
-        .video-overlay { background: linear-gradient(to bottom, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.9) 100%); }
+        /* Video Background Overlay */
+        .video-overlay { background: linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.9) 100%); }
 
         /* Chatbot */
         #chat-window { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: translateY(20px) scale(0.9); opacity: 0; pointer-events: none; }
@@ -44,10 +44,10 @@
 </head>
 <body>
 
-    <nav class="fixed w-full z-50 px-10 py-8 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent">
+    <nav id="main-nav" class="fixed w-full z-50 px-10 py-8 flex justify-between items-center transition-all duration-500">
         <h1 class="heading-font text-xl font-bold text-white tracking-[0.4em] cursor-pointer" onclick="window.scrollTo(0,0)">GROOMING LAB</h1>
         
-        <div class="flex space-x-16 items-center">
+        <div class="flex space-x-6 items-center">
             <div class="nav-container">
                 <a href="#services" id="nav-services" class="text-[10px] tracking-[0.3em] uppercase link-active">Services</a>
                 <a href="#" id="nav-studio" class="text-[10px] tracking-[0.3em] uppercase link-hidden">Studio</a>
@@ -98,13 +98,21 @@
 
     <div class="fixed bottom-8 right-8 z-[100]">
         <div id="chat-window" class="absolute bottom-20 right-0 w-80 h-[480px] bg-zinc-900 border border-zinc-800 rounded-3xl flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-5 border-b border-zinc-800 flex justify-between items-center"><span class="heading-font text-[10px] tracking-widest text-zinc-400">Concierge</span><button onclick="toggleChat()" class="text-zinc-500 hover:text-white text-xl">&times;</button></div>
+            <div class="p-5 border-b border-zinc-800 flex justify-between items-center bg-zinc-900">
+                <span class="heading-font text-[10px] tracking-widest text-zinc-400">Concierge</span>
+                <button onclick="toggleChat()" class="text-zinc-500 hover:text-white text-xl">&times;</button>
+            </div>
             <div id="chat-content" class="flex-1 p-5 overflow-y-auto text-[13px] space-y-4">
-                <div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none border border-white/5">How may we assist you? <br><br>1. Haircut | 2. Shave | 3. Beard | 4. Detan | 5. Book</div>
+                <div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none border border-white/5 shadow-md">
+                    Welcome. How may we assist you? <br><br>
+                    <strong>1. Haircut</strong> | <strong>2. Shave</strong><br>
+                    <strong>3. Beard</strong> | <strong>4. Detan</strong><br>
+                    <strong>5. Book Appointment</strong>
+                </div>
             </div>
             <div id="typing-indicator" class="px-5 py-2 hidden flex gap-1"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
             <div class="p-4 bg-zinc-950 flex gap-2">
-                <input id="chat-input" type="text" placeholder="Type..." class="flex-1 bg-transparent text-xs outline-none text-white px-2" onkeypress="if(event.key === 'Enter') handleChat()">
+                <input id="chat-input" type="text" placeholder="Type a number..." class="flex-1 bg-transparent text-xs outline-none text-white px-2" onkeypress="if(event.key === 'Enter') handleChat()">
                 <button onclick="handleChat()" class="bg-white text-black px-4 py-2 rounded-full text-[10px] font-bold">SEND</button>
             </div>
         </div>
@@ -115,25 +123,28 @@
     <script>
         AOS.init({ duration: 1200, once: false, mirror: true });
 
-        // IMPROVED NAVBAR SWITCHER
         window.addEventListener('scroll', () => {
             const serviceSection = document.getElementById('services');
             const navServices = document.getElementById('nav-services');
             const navStudio = document.getElementById('nav-studio');
+            const mainNav = document.getElementById('main-nav');
             
-            // Trigger switch slightly before hitting the section
-            if (window.scrollY >= serviceSection.offsetTop - 300) {
-                navServices.classList.add('link-hidden');
-                navServices.classList.remove('link-active');
-                
-                navStudio.classList.add('link-active');
-                navStudio.classList.remove('link-hidden');
+            // Navbar Background Change
+            if (window.scrollY > 50) {
+                mainNav.classList.add('bg-black/90', 'py-4');
+                mainNav.classList.remove('py-8');
             } else {
-                navServices.classList.add('link-active');
-                navServices.classList.remove('link-hidden');
-                
-                navStudio.classList.add('link-hidden');
-                navStudio.classList.remove('link-active');
+                mainNav.classList.remove('bg-black/90', 'py-4');
+                mainNav.classList.add('py-8');
+            }
+
+            // Link Swapper
+            if (window.scrollY >= serviceSection.offsetTop - 300) {
+                navServices.classList.replace('link-active', 'link-hidden');
+                navStudio.classList.replace('link-hidden', 'link-active');
+            } else {
+                navServices.classList.replace('link-hidden', 'link-active');
+                navStudio.classList.replace('link-active', 'link-hidden');
             }
         });
 
