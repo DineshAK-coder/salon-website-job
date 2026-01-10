@@ -12,7 +12,7 @@
         body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e5e5e5; scroll-behavior: smooth; }
         .heading-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 4px; }
         
-        /* Premium Card Styling */
+        /* Service Card Styling */
         .service-card { 
             background: rgba(255, 255, 255, 0.02); 
             border: 1px solid rgba(255, 255, 255, 0.05); 
@@ -22,6 +22,11 @@
             background: rgba(255, 255, 255, 0.08); 
             transform: translateY(-15px);
             border-color: #d4af37;
+        }
+
+        /* Video Background Dimmer */
+        .video-overlay {
+            background: linear-gradient(to bottom, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.9) 100%);
         }
 
         /* Chatbot UI */
@@ -34,67 +39,75 @@
 </head>
 <body>
 
-    <nav class="fixed w-full z-50 px-10 py-8 flex justify-between items-center bg-gradient-to-b from-black via-black/50 to-transparent">
+    <nav class="fixed w-full z-50 px-10 py-8 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent">
         <h1 class="heading-font text-xl font-bold text-white tracking-[0.4em]">GROOMING LAB</h1>
-        <div class="hidden md:flex space-x-12">
-            <a href="#services" class="text-[10px] tracking-[0.3em] opacity-60 hover:opacity-100 transition">SERVICES</a>
-            <a href="#" class="text-[10px] tracking-[0.3em] opacity-60 hover:opacity-100 transition">STUDIO</a>
+        <div class="hidden md:flex space-x-12 text-white">
+            <a href="#services" class="text-[10px] tracking-[0.3em] opacity-60 hover:opacity-100 transition uppercase">Services</a>
+            <a href="#" class="text-[10px] tracking-[0.3em] opacity-60 hover:opacity-100 transition uppercase">Studio</a>
         </div>
     </nav>
 
-    <section class="h-[90vh] flex flex-col justify-center items-center text-center px-4">
-        <h2 data-aos="zoom-out" data-aos-duration="1500" class="heading-font text-7xl md:text-[10rem] mb-6 text-white">THE STANDARD</h2>
-        <p data-aos="fade-up" data-aos-delay="600" class="text-xs tracking-[0.6em] text-zinc-500 uppercase">Legacy in every cut</p>
+    <section class="relative h-[95vh] flex flex-col justify-center items-center text-center px-4 overflow-hidden">
+        <video autoplay muted loop playsinline class="absolute z-0 w-auto min-w-full min-h-full max-w-none grayscale brightness-[0.4]">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-barber-cutting-hair-with-a-pair-of-scissors-19409-large.mp4" type="video/mp4">
+        </video>
+        
+        <div class="absolute inset-0 z-1 video-overlay"></div>
+
+        <div class="relative z-10">
+            <h2 data-aos="zoom-out" data-aos-duration="2000" class="heading-font text-7xl md:text-[10rem] mb-6 text-white leading-none">THE STANDARD</h2>
+            <p data-aos="fade-up" data-aos-delay="800" class="text-xs tracking-[0.6em] text-zinc-400 uppercase">Legacy in every cut</p>
+        </div>
     </section>
 
     <section id="services" class="py-32 px-8 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
-                <div class="overflow-hidden rounded-xl mb-6 h-64">
-                    <img src="https://i.pinimg.com/564x/0d/18/73/0d1873996726214f9d8569503673c090.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
+                <div class="overflow-hidden rounded-xl mb-6 h-72">
+                    <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
                 </div>
                 <h3 class="heading-font text-xl mb-2 text-white">Haircut</h3>
-                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Expert tailoring and fades designed for your specific head shape.</p>
+                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Precision fading and classic scissor work tailored to your profile.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
-                    <span class="text-sm font-bold">$45</span>
-                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white">ENQUIRE</button>
+                    <span class="text-sm font-bold tracking-widest">$45</span>
+                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white uppercase">Enquire</button>
                 </div>
             </div>
 
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
-                <div class="overflow-hidden rounded-xl mb-6 h-64">
-                    <img src="https://i.pinimg.com/564x/56/66/83/566683896593539744c01799298319f6.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
+                <div class="overflow-hidden rounded-xl mb-6 h-72">
+                    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
                 </div>
                 <h3 class="heading-font text-xl mb-2 text-white">Shave</h3>
                 <p class="text-zinc-500 text-xs mb-6 leading-relaxed">A ritualistic hot towel shave using premium oils and a straight razor.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
-                    <span class="text-sm font-bold">$35</span>
-                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white">ENQUIRE</button>
+                    <span class="text-sm font-bold tracking-widest">$35</span>
+                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white uppercase">Enquire</button>
                 </div>
             </div>
 
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="500">
-                <div class="overflow-hidden rounded-xl mb-6 h-64">
-                    <img src="https://i.pinimg.com/564x/a4/9e/f4/a49ef44671404169728514e820299616.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
+                <div class="overflow-hidden rounded-xl mb-6 h-72">
+                    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
                 </div>
                 <h3 class="heading-font text-xl mb-2 text-white">Beard</h3>
-                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Sculpting, lining, and deep conditioning for the perfect profile.</p>
+                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Expert sculpting and conditioning for the perfect facial hair profile.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
-                    <span class="text-sm font-bold">$25</span>
-                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white">ENQUIRE</button>
+                    <span class="text-sm font-bold tracking-widest">$25</span>
+                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white uppercase">Enquire</button>
                 </div>
             </div>
 
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="700">
-                <div class="overflow-hidden rounded-xl mb-6 h-64">
-                    <img src="https://i.pinimg.com/564x/0f/6b/6b/0f6b6b77242866657805166418873238.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
+                <div class="overflow-hidden rounded-xl mb-6 h-72">
+                    <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
                 </div>
                 <h3 class="heading-font text-xl mb-2 text-white">Detan</h3>
-                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Revitalizing skin therapy to remove impurities and brighten tone.</p>
+                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Deep skin revitalization therapy to restore your natural skin tone.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
-                    <span class="text-sm font-bold">$50</span>
-                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white">ENQUIRE</button>
+                    <span class="text-sm font-bold tracking-widest">$50</span>
+                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white uppercase">Enquire</button>
                 </div>
             </div>
         </div>
@@ -102,34 +115,30 @@
 
     <div class="fixed bottom-8 right-8 z-[100]">
         <div id="chat-window" class="absolute bottom-20 right-0 w-80 h-[480px] bg-zinc-900 border border-zinc-800 rounded-3xl flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-5 border-b border-zinc-800 flex justify-between items-center bg-zinc-900">
+            <div class="p-5 border-b border-zinc-800 flex justify-between items-center">
                 <span class="heading-font text-[10px] tracking-widest text-zinc-400">Concierge</span>
                 <button onclick="toggleChat()" class="text-zinc-500 hover:text-white text-xl">&times;</button>
             </div>
             <div id="chat-content" class="flex-1 p-5 overflow-y-auto text-[13px] space-y-4">
-                <div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none">
-                    Welcome back. How may we assist you today? <br><br>
+                <div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none border border-white/5 shadow-md">
+                    Welcome. How may we assist you? <br><br>
                     <strong>1. Haircut</strong> | <strong>2. Shave</strong><br>
                     <strong>3. Beard</strong> | <strong>4. Detan</strong><br>
-                    <strong>5. Book Slot</strong>
+                    <strong>5. Book Appointment</strong>
                 </div>
             </div>
             <div id="typing-indicator" class="px-5 py-2 hidden flex gap-1"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
             <div class="p-4 bg-zinc-950 flex gap-2">
-                <input id="chat-input" type="text" placeholder="Type a number..." class="flex-1 bg-transparent text-xs outline-none text-white px-2" onkeypress="if(event.key === 'Enter') handleChat()">
-                <button onclick="handleChat()" class="bg-white text-black px-4 py-2 rounded-full text-[10px] font-bold">SEND</button>
+                <input id="chat-input" type="text" placeholder="Type a number or phone..." class="flex-1 bg-transparent text-xs outline-none text-white px-2" onkeypress="if(event.key === 'Enter') handleChat()">
+                <button onclick="handleChat()" class="bg-white text-black px-4 py-2 rounded-full text-[10px] font-bold uppercase transition hover:bg-zinc-200">Send</button>
             </div>
         </div>
-        <button onclick="toggleChat()" class="bg-white text-black w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition duration-300 font-bold text-xs">CHAT</button>
+        <button onclick="toggleChat()" class="bg-white text-black w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition duration-300 font-bold text-[10px] tracking-tighter uppercase">Chat</button>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ 
-            duration: 1000,
-            once: false, // This allows them to "pop off" and re-animate if you scroll back up
-            mirror: true 
-        });
+        AOS.init({ duration: 1200, once: false, mirror: true });
 
         function toggleChat() {
             document.getElementById('chat-window').classList.toggle('active');
@@ -141,8 +150,10 @@
             const content = document.getElementById('chat-content');
             const typing = document.getElementById('typing-indicator');
             const val = input.value.trim().toLowerCase();
+            
             if(!val) return;
 
+            // Show User Message
             content.innerHTML += `<div class="bg-zinc-700 p-3 rounded-2xl rounded-tr-none ml-10 text-right text-white">${input.value}</div>`;
             input.value = '';
             content.scrollTop = content.scrollHeight;
@@ -154,13 +165,13 @@
                 const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
                 if (phoneRegex.test(val.replace(/\s/g, ""))) {
-                    reply = "Received. We'll call you shortly to finalize your appointment.";
+                    reply = "<strong>Understood.</strong> Our manager will call you shortly to confirm your booking. 💈";
                 } else if (['1','2','3','4'].some(n => val.includes(n))) {
-                    reply = "Great choice. Share your phone number and we'll handle the rest.";
+                    reply = "Excellent choice. Please <strong>share your phone number</strong> so we can call you to finalize a time.";
                 } else if (val.includes('5') || val.includes('book')) {
-                    reply = "Please enter your phone number to check availability.";
+                    reply = "Let's get you booked. Please enter your <strong>phone number</strong> here.";
                 } else {
-                    reply = "Please select a service number (1-4) or share your phone number.";
+                    reply = "Please enter a service number (1-4) or your phone number.";
                 }
 
                 content.innerHTML += `<div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none mr-10 text-zinc-300 border border-white/5">${reply}</div>`;
