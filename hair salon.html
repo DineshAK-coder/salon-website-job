@@ -6,27 +6,26 @@
     <title>The Grooming Lab | Classic Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@500&display=swap');
         
-        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e5e5e5; scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e5e5e5; scroll-behavior: smooth; overflow-x: hidden; }
         .heading-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 4px; }
         
-        /* NAVBAR SPACING FIX */
+        /* THE STYLISH NAVBAR (REMEMBERED) */
         .nav-container { position: relative; width: 70px; height: 20px; display: flex; justify-content: center; align-items: center; }
-        
         #nav-services, #nav-studio { 
             position: absolute; 
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
-            left: 0; /* Align to the left of the container for consistent spacing */
+            left: 0;
         }
-
         .link-active { opacity: 0.6; transform: translateY(0); pointer-events: auto; }
         .link-active:hover { opacity: 1; }
         .link-hidden { opacity: 0; transform: translateY(10px); pointer-events: none; }
 
-        /* Card Styling */
+        /* Service Cards */
         .service-card { 
             background: rgba(255, 255, 255, 0.02); 
             border: 1px solid rgba(255, 255, 255, 0.05); 
@@ -34,25 +33,35 @@
         }
         .service-card:hover { transform: translateY(-15px); border-color: #d4af37; background: rgba(255, 255, 255, 0.08); }
 
-        /* Video Background Overlay */
+        /* Video Overlay */
         .video-overlay { background: linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.9) 100%); }
+
+        /* Map Section Reveal Styling */
+        #map-section { 
+            height: 500px; 
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        #map-section.map-visible { opacity: 1; transform: translateY(0); }
+        #dark-map { height: 100%; width: 100%; filter: invert(100%) hue-rotate(180deg) brightness(0.7) contrast(1.2); }
 
         /* Chatbot */
         #chat-window { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: translateY(20px) scale(0.9); opacity: 0; pointer-events: none; }
         #chat-window.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+        .typing-dot { width: 4px; height: 4px; background: #888; border-radius: 50%; animation: blink 1.4s infinite both; }
+        @keyframes blink { 0%, 100% { opacity: 0.2; } 20% { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <nav id="main-nav" class="fixed w-full z-50 px-10 py-8 flex justify-between items-center transition-all duration-500">
         <h1 class="heading-font text-xl font-bold text-white tracking-[0.4em] cursor-pointer" onclick="window.scrollTo(0,0)">GROOMING LAB</h1>
-        
         <div class="flex space-x-6 items-center">
             <div class="nav-container">
                 <a href="#services" id="nav-services" class="text-[10px] tracking-[0.3em] uppercase link-active">Services</a>
-                <a href="#" id="nav-studio" class="text-[10px] tracking-[0.3em] uppercase link-hidden">Studio</a>
+                <a href="#map-section" id="nav-studio" class="text-[10px] tracking-[0.3em] uppercase link-hidden">Studio</a>
             </div>
-            
             <a href="#" onclick="toggleChat()" class="text-[10px] tracking-[0.3em] opacity-60 hover:opacity-100 transition uppercase">Contact</a>
         </div>
     </nav>
@@ -75,24 +84,41 @@
                     <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
                 </div>
                 <h3 class="heading-font text-xl mb-2 text-white">Haircut</h3>
-                <p class="text-zinc-500 text-xs mb-6">Precision fading and classic scissor work.</p>
+                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Precision fading and classic scissor work.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$45</span></div>
             </div>
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
-                <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
-                <h3 class="heading-font text-xl mb-2 text-white">Shave</h3><p class="text-zinc-500 text-xs mb-6">Traditional hot towel razor shave.</p>
+                <div class="overflow-hidden rounded-xl mb-6 h-72">
+                    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                </div>
+                <h3 class="heading-font text-xl mb-2 text-white">Shave</h3>
+                <p class="text-zinc-500 text-xs mb-6">Traditional hot towel razor shave.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$35</span></div>
             </div>
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="500">
-                <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
-                <h3 class="heading-font text-xl mb-2 text-white">Beard</h3><p class="text-zinc-500 text-xs mb-6">Expert sculpting and conditioning.</p>
+                <div class="overflow-hidden rounded-xl mb-6 h-72">
+                    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                </div>
+                <h3 class="heading-font text-xl mb-2 text-white">Beard</h3>
+                <p class="text-zinc-500 text-xs mb-6">Expert sculpting and conditioning.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$25</span></div>
             </div>
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="700">
-                <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
-                <h3 class="heading-font text-xl mb-2 text-white">Detan</h3><p class="text-zinc-500 text-xs mb-6">Deep skin revitalization therapy.</p>
+                <div class="overflow-hidden rounded-xl mb-6 h-72">
+                    <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                </div>
+                <h3 class="heading-font text-xl mb-2 text-white">Detan</h3>
+                <p class="text-zinc-500 text-xs mb-6">Deep skin revitalization therapy.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$50</span></div>
             </div>
+        </div>
+    </section>
+
+    <section id="map-section" class="relative bg-zinc-950">
+        <div id="dark-map"></div>
+        <div class="absolute top-1/2 left-10 -translate-y-1/2 z-10 p-8 bg-black/80 border-l-2 border-yellow-600 backdrop-blur-md max-w-xs">
+            <h4 class="heading-font text-white text-lg mb-2">Our Landmark</h4>
+            <p class="text-zinc-400 text-xs leading-relaxed uppercase tracking-widest">Adjacent to the Grand Clock Tower, Old Town District. Experience the Legacy.</p>
         </div>
     </section>
 
@@ -103,16 +129,11 @@
                 <button onclick="toggleChat()" class="text-zinc-500 hover:text-white text-xl">&times;</button>
             </div>
             <div id="chat-content" class="flex-1 p-5 overflow-y-auto text-[13px] space-y-4">
-                <div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none border border-white/5 shadow-md">
-                    Welcome. How may we assist you? <br><br>
-                    <strong>1. Haircut</strong> | <strong>2. Shave</strong><br>
-                    <strong>3. Beard</strong> | <strong>4. Detan</strong><br>
-                    <strong>5. Book Appointment</strong>
-                </div>
+                <div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none border border-white/5">How may we assist you? <br><br>1. Haircut | 2. Shave | 3. Beard | 4. Detan | 5. Book</div>
             </div>
             <div id="typing-indicator" class="px-5 py-2 hidden flex gap-1"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
             <div class="p-4 bg-zinc-950 flex gap-2">
-                <input id="chat-input" type="text" placeholder="Type a number..." class="flex-1 bg-transparent text-xs outline-none text-white px-2" onkeypress="if(event.key === 'Enter') handleChat()">
+                <input id="chat-input" type="text" placeholder="Type..." class="flex-1 bg-transparent text-xs outline-none text-white px-2" onkeypress="if(event.key === 'Enter') handleChat()">
                 <button onclick="handleChat()" class="bg-white text-black px-4 py-2 rounded-full text-[10px] font-bold">SEND</button>
             </div>
         </div>
@@ -120,16 +141,19 @@
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         AOS.init({ duration: 1200, once: false, mirror: true });
 
+        // Navbar & Map Reveal Logic
         window.addEventListener('scroll', () => {
             const serviceSection = document.getElementById('services');
+            const mapSection = document.getElementById('map-section');
             const navServices = document.getElementById('nav-services');
             const navStudio = document.getElementById('nav-studio');
             const mainNav = document.getElementById('main-nav');
             
-            // Navbar Background Change
+            // Navbar Polish
             if (window.scrollY > 50) {
                 mainNav.classList.add('bg-black/90', 'py-4');
                 mainNav.classList.remove('py-8');
@@ -138,7 +162,7 @@
                 mainNav.classList.add('py-8');
             }
 
-            // Link Swapper
+            // Link Swapper (Remembered Design)
             if (window.scrollY >= serviceSection.offsetTop - 300) {
                 navServices.classList.replace('link-active', 'link-hidden');
                 navStudio.classList.replace('link-hidden', 'link-active');
@@ -146,8 +170,18 @@
                 navServices.classList.replace('link-hidden', 'link-active');
                 navStudio.classList.replace('link-active', 'link-hidden');
             }
+
+            // Map Reveal
+            if (window.scrollY >= serviceSection.offsetTop + (serviceSection.offsetHeight / 2)) {
+                mapSection.classList.add('map-visible');
+            }
         });
 
+        // Initialize Map
+        const map = L.map('dark-map', { zoomControl: false }).setView([40.7128, -74.0060], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // Chatbot Logic
         function toggleChat() {
             document.getElementById('chat-window').classList.toggle('active');
             document.getElementById('chat-input').focus();
@@ -165,11 +199,11 @@
             typing.classList.remove('hidden');
             setTimeout(() => {
                 typing.classList.add('hidden');
-                let reply = "Please select 1-5 or enter your phone number.";
+                let reply = "Please select 1-5 or share your phone number.";
                 const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-                if (phoneRegex.test(val.replace(/\s/g, ""))) reply = "Got it. We'll call you shortly. 💈";
-                else if (['1','2','3','4','5'].some(n => val.includes(n))) reply = "Excellent. Please share your phone number.";
-                content.innerHTML += `<div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none mr-10 text-zinc-300 border border-white/5">${reply}</div>`;
+                if (phoneRegex.test(val.replace(/\s/g, ""))) reply = "Understood. We'll call you shortly to confirm your booking.";
+                else if (['1','2','3','4','5'].some(n => val.includes(n))) reply = "Excellent. Please share your phone number so we can reach out.";
+                content.innerHTML += `<div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none mr-10 text-zinc-300 border border-white/5 shadow-lg">${reply}</div>`;
                 content.scrollTop = content.scrollHeight;
             }, 800);
         }
