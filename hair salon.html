@@ -12,48 +12,56 @@
         body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e5e5e5; scroll-behavior: smooth; }
         .heading-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 4px; }
         
-        /* Service Card Styling */
+        /* THE SMART NAVBAR FIX */
+        .nav-container { position: relative; width: 100px; height: 20px; display: flex; justify-content: center; align-items: center; }
+        
+        #nav-services, #nav-studio { 
+            position: absolute; 
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+
+        .link-active { opacity: 0.6; transform: translateY(0); pointer-events: auto; }
+        .link-active:hover { opacity: 1; }
+        
+        .link-hidden { opacity: 0; transform: translateY(10px); pointer-events: none; }
+
+        /* Card Styling */
         .service-card { 
             background: rgba(255, 255, 255, 0.02); 
             border: 1px solid rgba(255, 255, 255, 0.05); 
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .service-card:hover { 
-            background: rgba(255, 255, 255, 0.08); 
-            transform: translateY(-15px);
-            border-color: #d4af37;
-        }
+        .service-card:hover { transform: translateY(-15px); border-color: #d4af37; background: rgba(255, 255, 255, 0.08); }
 
-        /* Video Background Dimmer */
-        .video-overlay {
-            background: linear-gradient(to bottom, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.9) 100%);
-        }
+        /* Video Background */
+        .video-overlay { background: linear-gradient(to bottom, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.9) 100%); }
 
-        /* Chatbot UI */
+        /* Chatbot */
         #chat-window { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: translateY(20px) scale(0.9); opacity: 0; pointer-events: none; }
         #chat-window.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
-        
-        .typing-dot { width: 4px; height: 4px; background: #888; border-radius: 50%; animation: blink 1.4s infinite both; }
-        @keyframes blink { 0%, 100% { opacity: 0.2; } 20% { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <nav class="fixed w-full z-50 px-10 py-8 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent">
-        <h1 class="heading-font text-xl font-bold text-white tracking-[0.4em]">GROOMING LAB</h1>
-        <div class="hidden md:flex space-x-12 text-white">
-            <a href="#services" class="text-[10px] tracking-[0.3em] opacity-60 hover:opacity-100 transition uppercase">Services</a>
-            <a href="#" class="text-[10px] tracking-[0.3em] opacity-60 hover:opacity-100 transition uppercase">Studio</a>
+        <h1 class="heading-font text-xl font-bold text-white tracking-[0.4em] cursor-pointer" onclick="window.scrollTo(0,0)">GROOMING LAB</h1>
+        
+        <div class="flex space-x-16 items-center">
+            <div class="nav-container">
+                <a href="#services" id="nav-services" class="text-[10px] tracking-[0.3em] uppercase link-active">Services</a>
+                <a href="#" id="nav-studio" class="text-[10px] tracking-[0.3em] uppercase link-hidden">Studio</a>
+            </div>
+            
+            <a href="#" onclick="toggleChat()" class="text-[10px] tracking-[0.3em] opacity-60 hover:opacity-100 transition uppercase">Contact</a>
         </div>
     </nav>
 
-    <section class="relative h-[95vh] flex flex-col justify-center items-center text-center px-4 overflow-hidden">
+    <section id="home" class="relative h-[95vh] flex flex-col justify-center items-center text-center px-4 overflow-hidden">
         <video autoplay muted loop playsinline class="absolute z-0 w-auto min-w-full min-h-full max-w-none grayscale brightness-[0.4]">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-barber-cutting-hair-with-a-pair-of-scissors-19409-large.mp4" type="video/mp4">
         </video>
-        
         <div class="absolute inset-0 z-1 video-overlay"></div>
-
         <div class="relative z-10">
             <h2 data-aos="zoom-out" data-aos-duration="2000" class="heading-font text-7xl md:text-[10rem] mb-6 text-white leading-none">THE STANDARD</h2>
             <p data-aos="fade-up" data-aos-delay="800" class="text-xs tracking-[0.6em] text-zinc-400 uppercase">Legacy in every cut</p>
@@ -62,83 +70,72 @@
 
     <section id="services" class="py-32 px-8 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
                 <div class="overflow-hidden rounded-xl mb-6 h-72">
                     <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
                 </div>
                 <h3 class="heading-font text-xl mb-2 text-white">Haircut</h3>
-                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Precision fading and classic scissor work tailored to your profile.</p>
-                <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
-                    <span class="text-sm font-bold tracking-widest">$45</span>
-                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white uppercase">Enquire</button>
-                </div>
+                <p class="text-zinc-500 text-xs mb-6">Precision fading and classic scissor work.</p>
+                <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$45</span></div>
             </div>
-
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
-                <div class="overflow-hidden rounded-xl mb-6 h-72">
-                    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
-                </div>
-                <h3 class="heading-font text-xl mb-2 text-white">Shave</h3>
-                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">A ritualistic hot towel shave using premium oils and a straight razor.</p>
-                <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
-                    <span class="text-sm font-bold tracking-widest">$35</span>
-                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white uppercase">Enquire</button>
-                </div>
+                <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
+                <h3 class="heading-font text-xl mb-2 text-white">Shave</h3><p class="text-zinc-500 text-xs mb-6">Traditional hot towel razor shave.</p>
+                <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$35</span></div>
             </div>
-
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="500">
-                <div class="overflow-hidden rounded-xl mb-6 h-72">
-                    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
-                </div>
-                <h3 class="heading-font text-xl mb-2 text-white">Beard</h3>
-                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Expert sculpting and conditioning for the perfect facial hair profile.</p>
-                <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
-                    <span class="text-sm font-bold tracking-widest">$25</span>
-                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white uppercase">Enquire</button>
-                </div>
+                <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
+                <h3 class="heading-font text-xl mb-2 text-white">Beard</h3><p class="text-zinc-500 text-xs mb-6">Expert sculpting and conditioning.</p>
+                <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$25</span></div>
             </div>
-
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="700">
-                <div class="overflow-hidden rounded-xl mb-6 h-72">
-                    <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
-                </div>
-                <h3 class="heading-font text-xl mb-2 text-white">Detan</h3>
-                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Deep skin revitalization therapy to restore your natural skin tone.</p>
-                <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
-                    <span class="text-sm font-bold tracking-widest">$50</span>
-                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white uppercase">Enquire</button>
-                </div>
+                <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
+                <h3 class="heading-font text-xl mb-2 text-white">Detan</h3><p class="text-zinc-500 text-xs mb-6">Deep skin revitalization therapy.</p>
+                <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$50</span></div>
             </div>
         </div>
     </section>
 
     <div class="fixed bottom-8 right-8 z-[100]">
         <div id="chat-window" class="absolute bottom-20 right-0 w-80 h-[480px] bg-zinc-900 border border-zinc-800 rounded-3xl flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-5 border-b border-zinc-800 flex justify-between items-center">
-                <span class="heading-font text-[10px] tracking-widest text-zinc-400">Concierge</span>
-                <button onclick="toggleChat()" class="text-zinc-500 hover:text-white text-xl">&times;</button>
-            </div>
+            <div class="p-5 border-b border-zinc-800 flex justify-between items-center"><span class="heading-font text-[10px] tracking-widest text-zinc-400">Concierge</span><button onclick="toggleChat()" class="text-zinc-500 hover:text-white text-xl">&times;</button></div>
             <div id="chat-content" class="flex-1 p-5 overflow-y-auto text-[13px] space-y-4">
-                <div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none border border-white/5 shadow-md">
-                    Welcome. How may we assist you? <br><br>
-                    <strong>1. Haircut</strong> | <strong>2. Shave</strong><br>
-                    <strong>3. Beard</strong> | <strong>4. Detan</strong><br>
-                    <strong>5. Book Appointment</strong>
-                </div>
+                <div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none border border-white/5">How may we assist you? <br><br>1. Haircut | 2. Shave | 3. Beard | 4. Detan | 5. Book</div>
             </div>
             <div id="typing-indicator" class="px-5 py-2 hidden flex gap-1"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
             <div class="p-4 bg-zinc-950 flex gap-2">
-                <input id="chat-input" type="text" placeholder="Type a number or phone..." class="flex-1 bg-transparent text-xs outline-none text-white px-2" onkeypress="if(event.key === 'Enter') handleChat()">
-                <button onclick="handleChat()" class="bg-white text-black px-4 py-2 rounded-full text-[10px] font-bold uppercase transition hover:bg-zinc-200">Send</button>
+                <input id="chat-input" type="text" placeholder="Type..." class="flex-1 bg-transparent text-xs outline-none text-white px-2" onkeypress="if(event.key === 'Enter') handleChat()">
+                <button onclick="handleChat()" class="bg-white text-black px-4 py-2 rounded-full text-[10px] font-bold">SEND</button>
             </div>
         </div>
-        <button onclick="toggleChat()" class="bg-white text-black w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition duration-300 font-bold text-[10px] tracking-tighter uppercase">Chat</button>
+        <button onclick="toggleChat()" class="bg-white text-black w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition duration-300 font-bold text-[10px]">CHAT</button>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 1200, once: false, mirror: true });
+
+        // IMPROVED NAVBAR SWITCHER
+        window.addEventListener('scroll', () => {
+            const serviceSection = document.getElementById('services');
+            const navServices = document.getElementById('nav-services');
+            const navStudio = document.getElementById('nav-studio');
+            
+            // Trigger switch slightly before hitting the section
+            if (window.scrollY >= serviceSection.offsetTop - 300) {
+                navServices.classList.add('link-hidden');
+                navServices.classList.remove('link-active');
+                
+                navStudio.classList.add('link-active');
+                navStudio.classList.remove('link-hidden');
+            } else {
+                navServices.classList.add('link-active');
+                navServices.classList.remove('link-hidden');
+                
+                navStudio.classList.add('link-hidden');
+                navStudio.classList.remove('link-active');
+            }
+        });
 
         function toggleChat() {
             document.getElementById('chat-window').classList.toggle('active');
@@ -150,30 +147,17 @@
             const content = document.getElementById('chat-content');
             const typing = document.getElementById('typing-indicator');
             const val = input.value.trim().toLowerCase();
-            
             if(!val) return;
-
-            // Show User Message
             content.innerHTML += `<div class="bg-zinc-700 p-3 rounded-2xl rounded-tr-none ml-10 text-right text-white">${input.value}</div>`;
             input.value = '';
             content.scrollTop = content.scrollHeight;
             typing.classList.remove('hidden');
-
             setTimeout(() => {
                 typing.classList.add('hidden');
-                let reply = "";
+                let reply = "Please select 1-5 or enter your phone number.";
                 const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-
-                if (phoneRegex.test(val.replace(/\s/g, ""))) {
-                    reply = "<strong>Understood.</strong> Our manager will call you shortly to confirm your booking. 💈";
-                } else if (['1','2','3','4'].some(n => val.includes(n))) {
-                    reply = "Excellent choice. Please <strong>share your phone number</strong> so we can call you to finalize a time.";
-                } else if (val.includes('5') || val.includes('book')) {
-                    reply = "Let's get you booked. Please enter your <strong>phone number</strong> here.";
-                } else {
-                    reply = "Please enter a service number (1-4) or your phone number.";
-                }
-
+                if (phoneRegex.test(val.replace(/\s/g, ""))) reply = "Got it. We'll call you shortly. 💈";
+                else if (['1','2','3','4','5'].some(n => val.includes(n))) reply = "Excellent. Please share your phone number.";
                 content.innerHTML += `<div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none mr-10 text-zinc-300 border border-white/5">${reply}</div>`;
                 content.scrollTop = content.scrollHeight;
             }, 800);
