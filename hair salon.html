@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Grooming Lab | Premium Salon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;700&display=swap');
+        body { font-family: 'Montserrat', sans-serif; background-color: #0f0f0f; color: white; }
+        .heading-font { font-family: 'Bebas Neue', cursive; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .gold-gradient { background: linear-gradient(45deg, #d4af37, #f9e076); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed w-full z-50 px-8 py-6 flex justify-between items-center glass">
+        <h1 class="heading-font text-3xl tracking-widest gold-gradient">GROOMING LAB</h1>
+        <button class="bg-white text-black font-bold py-2 px-6 rounded-full hover:bg-yellow-500 transition-all duration-300">BOOK NOW</button>
+    </nav>
+
+    <section class="h-screen flex flex-col justify-center items-center text-center px-4" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1920&q=80') center/cover;">
+        <h2 data-aos="fade-up" data-aos-duration="1000" class="heading-font text-7xl md:text-9xl mb-4">Master Your Style</h2>
+        <p data-aos="fade-up" data-aos-delay="300" class="text-lg md:text-2xl text-gray-300 max-w-2xl">Premium haircuts, classic shaves, and luxury skin therapy for the modern man.</p>
+        <div data-aos="zoom-in" data-aos-delay="600" class="mt-8">
+            <a href="#services" class="border-2 border-white px-8 py-3 rounded-full hover:bg-white hover:text-black transition duration-300">EXPLORE SERVICES</a>
+        </div>
+    </section>
+
+    <section id="services" class="py-24 px-8 max-w-7xl mx-auto">
+        <h2 class="heading-font text-5xl mb-16 text-center" data-aos="fade-right">Our Expertise</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <div class="glass p-4 rounded-2xl group" data-aos="fade-up" data-aos-delay="100">
+                <div class="overflow-hidden rounded-xl mb-6">
+                    <img src="https://i.pinimg.com/564x/0d/18/73/0d1873996726214f9d8569503673c090.jpg" alt="Haircut" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <h3 class="text-2xl font-bold mb-2 gold-gradient">The Signature Cut</h3>
+                <p class="text-gray-400 text-sm mb-4">Custom fades and classic styles tailored to your unique profile.</p>
+                <button class="text-xs tracking-widest font-bold border-b border-yellow-500 pb-1">BOOK FOR $40</button>
+            </div>
+
+            <div class="glass p-4 rounded-2xl group" data-aos="fade-up" data-aos-delay="200">
+                <div class="overflow-hidden rounded-xl mb-6">
+                    <img src="https://i.pinimg.com/564x/56/66/83/566683896593539744c01799298319f6.jpg" alt="Shave" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <h3 class="text-2xl font-bold mb-2 gold-gradient">Hot Towel Shave</h3>
+                <p class="text-gray-400 text-sm mb-4">Experience the ultimate relaxation with our traditional razor shave.</p>
+                <button class="text-xs tracking-widest font-bold border-b border-yellow-500 pb-1">BOOK FOR $30</button>
+            </div>
+
+            <div class="glass p-4 rounded-2xl group" data-aos="fade-up" data-aos-delay="300">
+                <div class="overflow-hidden rounded-xl mb-6">
+                    <img src="https://i.pinimg.com/564x/a4/9e/f4/a49ef44671404169728514e820299616.jpg" alt="Beard" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <h3 class="text-2xl font-bold mb-2 gold-gradient">Beard Sculpt</h3>
+                <p class="text-gray-400 text-sm mb-4">Precision shaping and conditioning for a sharp, clean look.</p>
+                <button class="text-xs tracking-widest font-bold border-b border-yellow-500 pb-1">BOOK FOR $25</button>
+            </div>
+
+            <div class="glass p-4 rounded-2xl group" data-aos="fade-up" data-aos-delay="400">
+                <div class="overflow-hidden rounded-xl mb-6">
+                    <img src="https://i.pinimg.com/564x/0f/6b/6b/0f6b6b77242866657805166418873238.jpg" alt="Detan" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <h3 class="text-2xl font-bold mb-2 gold-gradient">Detan Glow</h3>
+                <p class="text-gray-400 text-sm mb-4">Restore your skin's natural tone with our charcoal detan therapy.</p>
+                <button class="text-xs tracking-widest font-bold border-b border-yellow-500 pb-1">BOOK FOR $50</button>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="fixed bottom-10 right-10 z-50">
+        <button class="bg-yellow-500 text-black h-16 w-16 rounded-full shadow-2xl flex items-center justify-center font-bold hover:scale-110 transition-transform pulse">
+            BOOK
+        </button>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            offset: 100,
+            easing: 'ease-in-out',
+        });
+    </script>
+</body>
+</html>
