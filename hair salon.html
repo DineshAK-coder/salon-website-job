@@ -3,45 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Grooming Lab | Premium Salon</title>
+    <title>The Grooming Lab | Classic Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@500&display=swap');
         
-        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e5e5e5; scroll-behavior: smooth; overflow-x: hidden; }
-        .heading-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 3px; }
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e5e5e5; scroll-behavior: smooth; }
+        .heading-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 4px; }
         
         /* Premium Card Styling */
         .service-card { 
-            background: rgba(255, 255, 255, 0.03); 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.02); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .service-card:hover { 
-            background: rgba(255, 255, 255, 0.07); 
-            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08); 
+            transform: translateY(-15px);
             border-color: #d4af37;
         }
 
-        /* Chatbot Transitions */
+        /* Chatbot UI */
         #chat-window { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: translateY(20px) scale(0.9); opacity: 0; pointer-events: none; }
         #chat-window.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
         
-        /* Typing Dots Animation */
         .typing-dot { width: 4px; height: 4px; background: #888; border-radius: 50%; animation: blink 1.4s infinite both; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
-
-        /* Custom Scrollbar for Chat */
-        .chat-scroll::-webkit-scrollbar { width: 4px; }
-        .chat-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        @keyframes blink { 0%, 100% { opacity: 0.2; } 20% { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <nav class="fixed w-full z-50 px-10 py-8 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent">
+    <nav class="fixed w-full z-50 px-10 py-8 flex justify-between items-center bg-gradient-to-b from-black via-black/50 to-transparent">
         <h1 class="heading-font text-xl font-bold text-white tracking-[0.4em]">GROOMING LAB</h1>
         <div class="hidden md:flex space-x-12">
             <a href="#services" class="text-[10px] tracking-[0.3em] opacity-60 hover:opacity-100 transition">SERVICES</a>
@@ -49,12 +42,12 @@
         </div>
     </nav>
 
-    <section class="h-[70vh] flex flex-col justify-center items-center text-center px-4">
-        <h2 data-aos="zoom-out" data-aos-duration="1500" class="heading-font text-7xl md:text-9xl mb-4 text-white">THE STANDARD</h2>
-        <p data-aos="fade-up" data-aos-delay="500" class="text-xs tracking-[0.4em] text-zinc-500 uppercase">Exceptional Grooming for the Modern Man</p>
+    <section class="h-[90vh] flex flex-col justify-center items-center text-center px-4">
+        <h2 data-aos="zoom-out" data-aos-duration="1500" class="heading-font text-7xl md:text-[10rem] mb-6 text-white">THE STANDARD</h2>
+        <p data-aos="fade-up" data-aos-delay="600" class="text-xs tracking-[0.6em] text-zinc-500 uppercase">Legacy in every cut</p>
     </section>
 
-    <section id="services" class="py-20 px-8 max-w-7xl mx-auto">
+    <section id="services" class="py-32 px-8 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
@@ -62,92 +55,81 @@
                     <img src="https://i.pinimg.com/564x/0d/18/73/0d1873996726214f9d8569503673c090.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
                 </div>
                 <h3 class="heading-font text-xl mb-2 text-white">Haircut</h3>
-                <p class="text-zinc-500 text-xs mb-6">Expert tailoring and fades designed for your specific head shape.</p>
+                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Expert tailoring and fades designed for your specific head shape.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
                     <span class="text-sm font-bold">$45</span>
-                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white transition">ENQUIRE</button>
-                </div>
-            </div>
-
-            <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
-                <div class="overflow-hidden rounded-xl mb-6 h-64">
-                    <img src="https://i.pinimg.com/564x/56/66/83/566683896593539744c01799298319f6.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
-                </div>
-                <h3 class="heading-font text-xl mb-2 text-white">Shave</h3>
-                <p class="text-zinc-500 text-xs mb-6">A ritualistic hot towel shave using premium oils and a straight razor.</p>
-                <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
-                    <span class="text-sm font-bold">$35</span>
-                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white transition">ENQUIRE</button>
+                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white">ENQUIRE</button>
                 </div>
             </div>
 
             <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
                 <div class="overflow-hidden rounded-xl mb-6 h-64">
-                    <img src="https://i.pinimg.com/564x/a4/9e/f4/a49ef44671404169728514e820299616.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
+                    <img src="https://i.pinimg.com/564x/56/66/83/566683896593539744c01799298319f6.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
                 </div>
-                <h3 class="heading-font text-xl mb-2 text-white">Beard</h3>
-                <p class="text-zinc-500 text-xs mb-6">Sculpting, lining, and deep conditioning for the perfect profile.</p>
+                <h3 class="heading-font text-xl mb-2 text-white">Shave</h3>
+                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">A ritualistic hot towel shave using premium oils and a straight razor.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
-                    <span class="text-sm font-bold">$25</span>
-                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white transition">ENQUIRE</button>
+                    <span class="text-sm font-bold">$35</span>
+                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white">ENQUIRE</button>
                 </div>
             </div>
 
-            <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="500">
+                <div class="overflow-hidden rounded-xl mb-6 h-64">
+                    <img src="https://i.pinimg.com/564x/a4/9e/f4/a49ef44671404169728514e820299616.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
+                </div>
+                <h3 class="heading-font text-xl mb-2 text-white">Beard</h3>
+                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Sculpting, lining, and deep conditioning for the perfect profile.</p>
+                <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
+                    <span class="text-sm font-bold">$25</span>
+                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white">ENQUIRE</button>
+                </div>
+            </div>
+
+            <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="700">
                 <div class="overflow-hidden rounded-xl mb-6 h-64">
                     <img src="https://i.pinimg.com/564x/0f/6b/6b/0f6b6b77242866657805166418873238.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
                 </div>
                 <h3 class="heading-font text-xl mb-2 text-white">Detan</h3>
-                <p class="text-zinc-500 text-xs mb-6">Revitalizing skin therapy to remove impurities and brighten tone.</p>
+                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Revitalizing skin therapy to remove impurities and brighten tone.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4">
                     <span class="text-sm font-bold">$50</span>
-                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white transition">ENQUIRE</button>
+                    <button onclick="toggleChat()" class="text-[10px] tracking-widest text-zinc-400 hover:text-white">ENQUIRE</button>
                 </div>
             </div>
-
         </div>
     </section>
 
     <div class="fixed bottom-8 right-8 z-[100]">
         <div id="chat-window" class="absolute bottom-20 right-0 w-80 h-[480px] bg-zinc-900 border border-zinc-800 rounded-3xl flex flex-col shadow-2xl overflow-hidden">
             <div class="p-5 border-b border-zinc-800 flex justify-between items-center bg-zinc-900">
-                <span class="heading-font text-[10px] tracking-widest text-zinc-400">Grooming Concierge</span>
+                <span class="heading-font text-[10px] tracking-widest text-zinc-400">Concierge</span>
                 <button onclick="toggleChat()" class="text-zinc-500 hover:text-white text-xl">&times;</button>
             </div>
-            
-            <div id="chat-content" class="flex-1 p-5 overflow-y-auto text-[13px] space-y-4 chat-scroll">
-                <div class="bg-zinc-800 p-3 rounded-2xl rounded-tl-none border border-white/5">
-                    Welcome to the Lab. How can we assist you? <br><br>
-                    <strong>Reply with a number:</strong><br>
-                    1. Haircut Info<br>
-                    2. Shave Ritual<br>
-                    3. Beard Sculpting<br>
-                    4. Detan Therapy<br>
-                    5. Book Appointment
+            <div id="chat-content" class="flex-1 p-5 overflow-y-auto text-[13px] space-y-4">
+                <div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none">
+                    Welcome back. How may we assist you today? <br><br>
+                    <strong>1. Haircut</strong> | <strong>2. Shave</strong><br>
+                    <strong>3. Beard</strong> | <strong>4. Detan</strong><br>
+                    <strong>5. Book Slot</strong>
                 </div>
             </div>
-
-            <div id="typing-indicator" class="px-5 py-2 hidden flex gap-1">
-                <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
-            </div>
-
+            <div id="typing-indicator" class="px-5 py-2 hidden flex gap-1"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
             <div class="p-4 bg-zinc-950 flex gap-2">
-                <input id="chat-input" type="text" placeholder="Type a number or message..." 
-                       class="flex-1 bg-transparent text-xs outline-none text-white px-2"
-                       onkeypress="if(event.key === 'Enter') handleChat()">
-                <button onclick="handleChat()" class="bg-white text-black px-4 py-2 rounded-full text-[10px] font-bold transition hover:bg-zinc-200">SEND</button>
+                <input id="chat-input" type="text" placeholder="Type a number..." class="flex-1 bg-transparent text-xs outline-none text-white px-2" onkeypress="if(event.key === 'Enter') handleChat()">
+                <button onclick="handleChat()" class="bg-white text-black px-4 py-2 rounded-full text-[10px] font-bold">SEND</button>
             </div>
         </div>
-
-        <button onclick="toggleChat()" class="bg-white text-black w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </button>
+        <button onclick="toggleChat()" class="bg-white text-black w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition duration-300 font-bold text-xs">CHAT</button>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize Scroll Animations
-        AOS.init({ once: true, duration: 1000 });
+        AOS.init({ 
+            duration: 1000,
+            once: false, // This allows them to "pop off" and re-animate if you scroll back up
+            mirror: true 
+        });
 
         function toggleChat() {
             document.getElementById('chat-window').classList.toggle('active');
@@ -159,51 +141,29 @@
             const content = document.getElementById('chat-content');
             const typing = document.getElementById('typing-indicator');
             const val = input.value.trim().toLowerCase();
-            
             if(!val) return;
 
-            // 1. Show User Message
             content.innerHTML += `<div class="bg-zinc-700 p-3 rounded-2xl rounded-tr-none ml-10 text-right text-white">${input.value}</div>`;
             input.value = '';
             content.scrollTop = content.scrollHeight;
-
-            // 2. Show Typing Indicator
             typing.classList.remove('hidden');
-            content.scrollTop = content.scrollHeight;
 
             setTimeout(() => {
                 typing.classList.add('hidden');
                 let reply = "";
-
-                // 3. Smart Logic: Check for Phone Number first
-                // RegEx for a standard phone number (works for most global formats)
                 const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
                 if (phoneRegex.test(val.replace(/\s/g, ""))) {
-                    reply = "<strong>Perfect!</strong> We've noted your number. Our team will call you shortly to confirm your booking. 💈";
-                } 
-                // Check for Menu Selection
-                else if(val === '1' || val.includes('haircut')) {
-                    reply = "<strong>Signature Cut ($45):</strong> A 45-minute premium session including consultation, precision fading, and styling.";
-                }
-                else if(val === '2' || val.includes('shave')) {
-                    reply = "<strong>Royal Shave ($35):</strong> Our traditional straight-razor shave with a 3-step hot towel treatment.";
-                }
-                else if(val === '3' || val.includes('beard')) {
-                    reply = "<strong>Beard Sculpt ($25):</strong> Sharp lining, shaping, and deep conditioning to keep you looking sharp.";
-                }
-                else if(val === '4' || val.includes('detan')) {
-                    reply = "<strong>Detan Therapy ($50):</strong> Charcoal-based deep skin cleansing to remove tan and pollution.";
-                }
-                else if(val === '5' || val.includes('book')) {
-                    reply = "Ready to visit? Please <strong>share your phone number</strong> here, and we'll call you to finalize a time slot!";
-                }
-                else {
-                    reply = "I'm sorry, I'm still learning! Please type a number (1-5) for services, or enter your <strong>phone number</strong> for a callback.";
+                    reply = "Received. We'll call you shortly to finalize your appointment.";
+                } else if (['1','2','3','4'].some(n => val.includes(n))) {
+                    reply = "Great choice. Share your phone number and we'll handle the rest.";
+                } else if (val.includes('5') || val.includes('book')) {
+                    reply = "Please enter your phone number to check availability.";
+                } else {
+                    reply = "Please select a service number (1-4) or share your phone number.";
                 }
 
-                // 4. Show Bot Response
-                content.innerHTML += `<div class="bg-zinc-800 p-3 rounded-2xl rounded-tl-none mr-10 shadow-lg border border-white/5 text-zinc-300">${reply}</div>`;
+                content.innerHTML += `<div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none mr-10 text-zinc-300 border border-white/5">${reply}</div>`;
                 content.scrollTop = content.scrollHeight;
             }, 800);
         }
