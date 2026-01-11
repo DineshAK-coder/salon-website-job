@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barber Command Center | Live Queue</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
+        body { background: #050505; color: #eee; font-family: sans-serif; }
+        .heading { font-family: 'Oswald', sans-serif; letter-spacing: 2px; }
+        .card { background: #111; border-left: 4px solid #d4af37; transition: all 0.3s; }
+        .card.appointment { border-left-color: #ff0000; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+  <div id="audio-unlock" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center">
+    <button onclick="unlockAudio()" class="heading text-white border border-zinc-700 px-10 py-5 hover:border-white transition-all uppercase tracking-widest text-xs">
+        Initialize Live System
+    </button>
+    <p class="text-zinc-600 text-[9px] mt-4 uppercase tracking-[0.3em]">Click to enable audio alerts</p>
+</div>
+    <header class="flex justify-between items-center mb-8 border-b border-zinc-800 pb-6">
+        <div>
+            <h1 class="heading text-2xl uppercase">Live Queue</h1>
+            <p id="status-text" class="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">Connecting to System...</p>
+        </div>
+        <button onclick="clearAllDone()" class="text-[9px] border border-zinc-800 px-3 py-2 uppercase hover:bg-red-900 transition">Clear History</button>
+    </header>
+    <div class="grid grid-cols-2 gap-4 mb-8">
+        <div class="bg-zinc-900 p-4 rounded-lg border border-zinc-800 text-center"><div class="text-[9px] text-zinc-500 uppercase mb-1">Waiting</div><div id="count-waiting" class="text-2xl font-bold tracking-tighter text-white">0</div></div>
+        <div class="bg-zinc-900 p-4 rounded-lg border border-zinc-800 text-center"><div class="text-[9px] text-zinc-500 uppercase mb-1">Status</div><div id="live-dot" class="text-xs font-bold text-green-500 uppercase">● Online</div></div>
+    </div>
+    <div id="queue-container" class="space-y-4"></div>
+    <script>
+        const SUPABASE_URL = 'https://kcjtwznhepomzpgkezwi.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjanR3em5oZXBvbXpwZ2tlendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgxMTQyODgsImV4cCI6MjA4MzY5MDI4OH0.wLjUk2MDitcCeMrp9H-KHoj4XmkXYi7aVm4cqc1IgJ0';
+        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        async function fetchQueue() {
+            const { data, error } = await sb.from('bookings').select('*').neq('status', 'done').order('created_at', { ascending: true });
+            if (data) { renderQueue(data); document.getElementById('count-waiting').innerText = data.length; document.getElementById('status-text').innerText = "System Sync Successful"; }
+        }
+        function renderQueue(bookings) {
+            const container = document.getElementById('queue-container');
+            container.innerHTML = bookings.length === 0 ? '<p class="text-zinc-500 text-center py-10 uppercase text-[10px] tracking-widest">No Active Customers</p>' : '';
+            bookings.forEach((item, index) => {
+                const isAppt = item.booking_type === 'appointment';
+                const card = document.createElement('div');
+                card.className = `card ${isAppt ? 'appointment' : ''} p-5 flex justify-between items-center rounded-r-lg shadow-xl`;
+                card.innerHTML = `
+                    <div>
+                        <div class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">${isAppt ? 'Appointment' : 'Walk-in Token #' + (index + 1)}</div>
+                        <div class="text-lg font-bold tracking-tight">${item.service}</div>
+                        <div class="text-xs text-zinc-400 mt-1">${item.customer_name} • ${item.phone} ${item.scheduled_time ? ' • ' + item.scheduled_time : ''}</div>
+                    </div>
+                    <button onclick="markDone('${item.id}')" class="bg-zinc-800 hover:bg-white hover:text-black px-5 py-3 text-[10px] uppercase font-bold transition rounded">DONE</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+        async function markDone(id) { await sb.from('bookings').update({ status: 'done' }).eq('id', id); fetchQueue(); }
+        async function clearAllDone() { if(confirm("Clear all booking history?")) { await sb.from('bookings').delete().neq('id', '00000000-0000-0000-0000-000000000000'); fetchQueue(); } }
+        sb.channel('db-changes').on('postgres_changes', { event: '*', schema: 'public', table: 'bookings' }, () => { fetchQueue(); new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3').play(); }).subscribe();
+        fetchQueue();
+        // Function to hide overlay and unlock audio context
+function unlockAudio() {
+    // Play a silent sound to "prime" the audio engine
+    const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+    audio.volume = 0; 
+    audio.play().then(() => {
+        document.getElementById('audio-unlock').style.display = 'none';
+        console.log("Audio system unlocked and live.");
+    }).catch(e => console.error("Audio unlock failed:", e));
+}
+    </script>
+</body>
+</html>
