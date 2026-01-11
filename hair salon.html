@@ -16,11 +16,11 @@
         /* PRE-LOADER SCREEN */
         #loader {
             position: fixed; inset: 0; z-index: 9999; background: #000;
-            display: flex; flex-col; justify-content: center; align-items: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 1s ease;
         }
 
-        /* THE STYLISH NAVBAR (REMEMBERED) */
+        /* THE STYLISH NAVBAR */
         .nav-container { position: relative; width: 70px; height: 20px; display: flex; justify-content: center; align-items: center; }
         #nav-services, #nav-studio { position: absolute; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); white-space: nowrap; left: 0; }
         .link-active { opacity: 0.6; transform: translateY(0); pointer-events: auto; }
@@ -34,9 +34,25 @@
         /* Video Overlay */
         .video-overlay { background: linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.9) 100%); }
 
-        /* MAP SECTION */
-        #map-section { height: 500px; transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; transform: translateY(50px); position: relative; }
-        #map-section.map-visible { opacity: 1; transform: translateY(0); }
+        /* MAP SECTION - CINEMATIC FADE REVEAL */
+        #map-section { 
+            height: 500px; 
+            position: relative; 
+            background-color: #000;
+            /* Initial hidden state */
+            opacity: 0;
+            transform: translateY(80px) scale(0.98);
+            transition: opacity 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                        transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            filter: blur(10px);
+        }
+        
+        #map-section.map-visible { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+            filter: blur(0px);
+        }
+
         #dark-map { height: 100%; width: 100%; filter: grayscale(100%) invert(100%) brightness(0.7) contrast(1.2); background-color: #000; }
 
         .red-map-label { background: transparent !important; border: none !important; color: #ff0000 !important; font-family: 'Oswald', sans-serif; font-weight: bold; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,0,0,0.5); }
@@ -117,7 +133,7 @@
         </div>
     </section>
 
-    <section id="map-section" class="bg-black">
+    <section id="map-section">
         <div id="dark-map"></div>
         <div class="map-info-box">
             <h4 class="heading-font text-[#ff0000] text-lg mb-2">Our Landmark</h4>
@@ -156,12 +172,11 @@
         const hoverSound = document.getElementById('hover-sound');
         const heroVideo = document.getElementById('hero-video');
 
-        // ENABLE AUDIO ON ENTER
         function enterStudio() {
             document.getElementById('loader').style.opacity = '0';
             setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1000);
             
-            // Dummy play/pause to unlock audio context
+            // Unlock audio context
             clickSound.play().then(() => { clickSound.pause(); clickSound.currentTime = 0; });
             hoverSound.play().then(() => { hoverSound.pause(); hoverSound.currentTime = 0; });
             
@@ -169,8 +184,8 @@
             AOS.init({ duration: 1200, once: false, mirror: true });
         }
 
-        function playClick() { clickSound.volume = 0.4; clickSound.play(); }
-        function playHover() { hoverSound.volume = 0.2; hoverSound.play(); }
+        function playClick() { if(clickSound.paused || clickSound.currentTime > 0) { clickSound.currentTime = 0; clickSound.volume = 0.4; clickSound.play(); } }
+        function playHover() { if(hoverSound.paused || hoverSound.currentTime > 0) { hoverSound.currentTime = 0; hoverSound.volume = 0.2; hoverSound.play(); } }
 
         const coords = [12.9684, 80.2079];
         let botTriggered = false;
@@ -194,9 +209,11 @@
                 navStudio.classList.replace('link-active', 'link-hidden');
             }
 
-            if (window.scrollY >= serviceSection.offsetTop + (serviceSection.offsetHeight / 3)) { mapSection.classList.add('map-visible'); }
+            // Cinematic Map Reveal Trigger
+            if (window.scrollY >= serviceSection.offsetTop + (serviceSection.offsetHeight / 3)) { 
+                mapSection.classList.add('map-visible'); 
+            }
 
-            // Auto-trigger bot when reaching cards
             if (window.scrollY >= triggerCard.offsetTop && !botTriggered) {
                 playClick();
                 toggleChat();
