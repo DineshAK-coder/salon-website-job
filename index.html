@@ -22,18 +22,23 @@
         .link-active:hover { opacity: 1; }
         .link-hidden { opacity: 0; transform: translateY(10px); pointer-events: none; }
 
-        /* Service Cards */
+        /* SERVICE CARDS & COLOR REVERT LOGIC */
         .service-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
-        .service-card:hover { transform: translateY(-15px); border-color: #d4af37; background: rgba(255, 255, 255, 0.08); }
         
-        /* Book Button - Hidden by default, slides up on card hover/touch */
+        /* Initial grayscale state */
+        .service-card img { filter: grayscale(100%); transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* Revert to color on Hover (PC) or Tap (Mobile) */
+        .service-card:hover { transform: translateY(-15px); border-color: #d4af37; background: rgba(255, 255, 255, 0.08); }
+        .service-card:hover img { filter: grayscale(0%); }
+        
         .card-book-btn { 
             opacity: 0; transform: translateY(10px); transition: all 0.4s ease;
             background: #fff; color: #000; font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
         }
         .service-card:hover .card-book-btn { opacity: 1; transform: translateY(0); }
 
-        /* MAP SECTION */
+        /* MAP SECTION REVEAL */
         #map-section { height: 500px; position: relative; background-color: #000; opacity: 0; transform: translateY(60px); filter: blur(5px); transition: all 1.2s ease-out; }
         #map-section.map-visible { opacity: 1; transform: translateY(0); filter: blur(0px); }
         #dark-map { height: 100%; width: 100%; filter: grayscale(100%) invert(100%) brightness(0.7) contrast(1.2); }
@@ -44,7 +49,6 @@
             .map-info-box { position: static; transform: none; max-width: 100%; border-left: none; border-top: 1px solid #ff0000; text-align: center; padding: 2rem 1.5rem; background: #000; }
             #map-section { height: 350px; }
             #chat-window { width: 85vw !important; height: 380px !important; right: 0 !important; bottom: 80px !important; }
-            /* Force button visibility on mobile once card is tapped */
             .card-book-btn { opacity: 1; transform: translateY(0); } 
         }
 
@@ -86,9 +90,10 @@
 
     <section id="services" class="py-20 md:py-32 px-6 md:px-8 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            
             <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up">
-                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800" class="w-full h-full object-cover grayscale transition duration-700"></div>
+                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72">
+                    <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800" class="w-full h-full object-cover">
+                </div>
                 <h3 class="heading-font text-white">Haircut</h3>
                 <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4">
                     <span class="text-sm font-bold">$45</span>
@@ -97,7 +102,9 @@
             </div>
             
             <div class="service-card p-5 rounded-2xl" id="trigger-card" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="100">
-                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover grayscale transition duration-700"></div>
+                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72">
+                    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover">
+                </div>
                 <h3 class="heading-font text-white">Shave</h3>
                 <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4">
                     <span class="text-sm font-bold">$35</span>
@@ -106,7 +113,9 @@
             </div>
 
             <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="200">
-                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover grayscale transition duration-700"></div>
+                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72">
+                    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover">
+                </div>
                 <h3 class="heading-font text-white">Beard</h3>
                 <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4">
                     <span class="text-sm font-bold">$25</span>
@@ -115,7 +124,9 @@
             </div>
 
             <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="300">
-                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover grayscale transition duration-700"></div>
+                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72">
+                    <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover">
+                </div>
                 <h3 class="heading-font text-white">Detan</h3>
                 <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4">
                     <span class="text-sm font-bold">$50</span>
@@ -208,7 +219,6 @@
 
         function toggleChat() { document.getElementById('chat-window').classList.toggle('active'); document.getElementById('chat-input').focus(); }
         
-        // UPDATED: Function only called by the button, not the card
         function bookFromCard(serviceName) {
             playClick();
             if(!document.getElementById('chat-window').classList.contains('active')) toggleChat();
@@ -226,7 +236,7 @@
             input.value = '';
             content.scrollTop = content.scrollHeight;
             setTimeout(() => {
-                content.innerHTML += `<div class="border-l border-yellow-800/50 pl-4 py-1 text-zinc-300 uppercase tracking-tighter">Awaiting digits for ${val} confirmation.</div>`;
+                content.innerHTML += `<div class="border-l border-yellow-800/50 pl-4 py-1 text-zinc-300 uppercase tracking-tighter">Acknowledged. Requesting digits for ${val} confirmation.</div>`;
                 content.scrollTop = content.scrollHeight;
             }, 800);
         }
