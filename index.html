@@ -22,44 +22,31 @@
         .link-active:hover { opacity: 1; }
         .link-hidden { opacity: 0; transform: translateY(10px); pointer-events: none; }
 
-        /* Service Cards */
-        .service-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
-
-        /* MAP SECTION REVEAL */
-        #map-section { 
-            height: 500px; position: relative; background-color: #000;
-            opacity: 0; transform: translateY(60px); filter: blur(5px);
-            transition: all 1.2s ease-out;
+        /* Service Cards & Hidden Book Button */
+        .service-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; position: relative; }
+        .service-card:hover { transform: translateY(-15px); border-color: #d4af37; background: rgba(255, 255, 255, 0.08); }
+        
+        .card-book-btn { 
+            opacity: 0; transform: translateY(10px); transition: all 0.4s ease;
+            background: #fff; color: #000; font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
         }
+        .service-card:hover .card-book-btn { opacity: 1; transform: translateY(0); }
+
+        /* MAP SECTION */
+        #map-section { height: 500px; position: relative; background-color: #000; opacity: 0; transform: translateY(60px); filter: blur(5px); transition: all 1.2s ease-out; }
         #map-section.map-visible { opacity: 1; transform: translateY(0); filter: blur(0px); }
         #dark-map { height: 100%; width: 100%; filter: grayscale(100%) invert(100%) brightness(0.7) contrast(1.2); }
-
         .red-map-label { background: transparent !important; border: none !important; color: #ff0000 !important; font-family: 'Oswald', sans-serif; font-weight: bold; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,0,0,0.5); }
+        .map-info-box { position: absolute; top: 50%; left: 2.5rem; transform: translateY(-50%); z-index: 10; padding: 2rem; background: rgba(0, 0, 0, 0.95); border-left: 3px solid #ff0000; backdrop-filter: blur(8px); max-width: 320px; }
 
-        /* LANDMARK BOX - PC DEFAULT */
-        .map-info-box { 
-            position: absolute; top: 50%; left: 2.5rem; transform: translateY(-50%); z-index: 10; padding: 2rem; 
-            background: rgba(0, 0, 0, 0.95); border-left: 3px solid #ff0000; backdrop-filter: blur(8px); max-width: 320px; 
-        }
-
-        /* MOBILE FIXES */
         @media (max-width: 768px) {
-            .map-info-box { 
-                position: static; transform: none; max-width: 100%; 
-                border-left: none; border-top: 1px solid #ff0000; text-align: center; padding: 2rem 1.5rem;
-                background: #000;
-            }
+            .map-info-box { position: static; transform: none; max-width: 100%; border-left: none; border-top: 1px solid #ff0000; text-align: center; padding: 2rem 1.5rem; background: #000; }
             #map-section { height: 350px; }
             #chat-window { width: 85vw !important; height: 380px !important; right: 0 !important; bottom: 80px !important; }
-            .concierge-trigger { padding: 10px 20px !important; font-size: 10px !important; }
         }
 
-        /* CONCIERGE WINDOW */
-        #chat-window { 
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(30px); opacity: 0; pointer-events: none;
-            background: rgba(10, 10, 10, 0.98); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
-            position: absolute; bottom: 70px; right: 0; width: 320px; height: 450px;
-        }
+        /* CONCIERGE */
+        #chat-window { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(30px); opacity: 0; pointer-events: none; background: rgba(10, 10, 10, 0.98); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); position: absolute; bottom: 70px; right: 0; width: 320px; height: 450px; }
         #chat-window.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
         .concierge-trigger { background: #000; border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; font-family: 'Oswald', sans-serif; letter-spacing: 3px; }
     </style>
@@ -96,25 +83,40 @@
 
     <section id="services" class="py-20 md:py-32 px-6 md:px-8 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up">
-                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700"></div>
+            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" onclick="bookFromCard('Signature Haircut')" data-aos="fade-up">
+                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800" class="w-full h-full object-cover grayscale transition duration-700"></div>
                 <h3 class="heading-font text-white">Haircut</h3>
-                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4"><span class="text-sm font-bold">$45</span></div>
+                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4">
+                    <span class="text-sm font-bold">$45</span>
+                    <button class="card-book-btn px-4 py-2 uppercase">Book Now</button>
+                </div>
             </div>
-            <div class="service-card p-5 rounded-2xl" id="trigger-card" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="100">
-                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700"></div>
+            
+            <div class="service-card p-5 rounded-2xl" id="trigger-card" onmouseenter="playHover()" onclick="bookFromCard('Classic Shave')" data-aos="fade-up" data-aos-delay="100">
+                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover grayscale transition duration-700"></div>
                 <h3 class="heading-font text-white">Shave</h3>
-                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4"><span class="text-sm font-bold">$35</span></div>
+                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4">
+                    <span class="text-sm font-bold">$35</span>
+                    <button class="card-book-btn px-4 py-2 uppercase">Book Now</button>
+                </div>
             </div>
-            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="200">
-                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700"></div>
+
+            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" onclick="bookFromCard('Beard Sculpt')" data-aos="fade-up" data-aos-delay="200">
+                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover grayscale transition duration-700"></div>
                 <h3 class="heading-font text-white">Beard</h3>
-                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4"><span class="text-sm font-bold">$25</span></div>
+                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4">
+                    <span class="text-sm font-bold">$25</span>
+                    <button class="card-book-btn px-4 py-2 uppercase">Book Now</button>
+                </div>
             </div>
-            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="300">
-                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700"></div>
+
+            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" onclick="bookFromCard('Skin Therapy')" data-aos="fade-up" data-aos-delay="300">
+                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover grayscale transition duration-700"></div>
                 <h3 class="heading-font text-white">Detan</h3>
-                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4"><span class="text-sm font-bold">$50</span></div>
+                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4">
+                    <span class="text-sm font-bold">$50</span>
+                    <button class="card-book-btn px-4 py-2 uppercase">Book Now</button>
+                </div>
             </div>
         </div>
     </section>
@@ -130,8 +132,8 @@
 
     <div class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100]">
         <div id="chat-window" class="flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-4 border-b border-zinc-900 flex justify-between items-center">
-                <span class="heading-font text-[9px] tracking-[0.2em] text-white">Digital Concierge</span>
+            <div class="p-4 border-b border-zinc-900 flex justify-between items-center text-white">
+                <span class="heading-font text-[9px] tracking-[0.2em]">Digital Concierge</span>
                 <button onclick="toggleChat()" class="text-zinc-600 transition text-xl">&times;</button>
             </div>
             <div id="chat-content" class="flex-1 p-5 overflow-y-auto text-[11px] space-y-4 text-zinc-400">
@@ -174,10 +176,9 @@
             const navServices = document.getElementById('nav-services');
             const navStudio = document.getElementById('nav-studio');
 
-            // Navbar Swap logic
             if (scrollPos >= mapSection.offsetTop - 400) {
-                navServices.classList.replace('link-hidden', 'link-active');
-                navStudio.classList.replace('link-active', 'link-hidden');
+                navServices.classList.replace('link-active', 'link-hidden');
+                navStudio.classList.replace('link-hidden', 'link-active');
             } else if (scrollPos >= servicesSection.offsetTop - 300) {
                 navServices.classList.replace('link-active', 'link-hidden');
                 navStudio.classList.replace('link-hidden', 'link-active');
@@ -186,32 +187,41 @@
                 navStudio.classList.replace('link-active', 'link-hidden');
             }
 
-            // Map Reveal logic
             const mapRect = mapSection.getBoundingClientRect();
             if (mapRect.top < window.innerHeight - 150) { mapSection.classList.add('map-visible'); } 
             else { mapSection.classList.remove('map-visible'); }
 
-            // AUTO-OPEN CHATBOT (PC ONLY)
             if (window.innerWidth > 768 && scrollPos >= document.getElementById('trigger-card').offsetTop && !botTriggered) {
                 playClick(); toggleChat(); botTriggered = true;
             }
         });
 
+        // Map Init
         const map = L.map('dark-map', { zoomControl: false, attributionControl: false }).setView(coords, 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         L.marker(coords, { icon: L.divIcon({ className: 'red-map-label', html: 'Grooming Lab', iconSize: [120, 20], iconAnchor: [60, 25] }) }).addTo(map);
         L.circleMarker(coords, { radius: 6, color: 'red', fillColor: 'red', fillOpacity: 0.8 }).addTo(map);
 
         function toggleChat() { document.getElementById('chat-window').classList.toggle('active'); document.getElementById('chat-input').focus(); }
+        
+        function bookFromCard(serviceName) {
+            playClick();
+            if(!document.getElementById('chat-window').classList.contains('active')) toggleChat();
+            const input = document.getElementById('chat-input');
+            input.value = serviceName;
+            handleChat();
+        }
+
         function handleChat() {
             const input = document.getElementById('chat-input');
             const content = document.getElementById('chat-content');
             if(!input.value.trim()) return;
             content.innerHTML += `<div class="text-right text-white uppercase text-[9px]">> ${input.value}</div>`;
+            const val = input.value;
             input.value = '';
             content.scrollTop = content.scrollHeight;
             setTimeout(() => {
-                content.innerHTML += `<div class="border-l border-yellow-800/50 pl-4 py-1 text-zinc-300 uppercase tracking-tighter">Awaiting digits to confirm.</div>`;
+                content.innerHTML += `<div class="border-l border-yellow-800/50 pl-4 py-1 text-zinc-300 uppercase tracking-tighter">Acknowledged. Requesting digits for ${val} confirmation.</div>`;
                 content.scrollTop = content.scrollHeight;
             }, 800);
         }
