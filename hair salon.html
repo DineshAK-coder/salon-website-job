@@ -20,7 +20,7 @@
             transition: opacity 1s ease;
         }
 
-        /* THE STYLISH NAVBAR */
+        /* THE STYLISH NAVBAR (SMART SWAP) */
         .nav-container { position: relative; width: 70px; height: 20px; display: flex; justify-content: center; align-items: center; }
         #nav-services, #nav-studio { position: absolute; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); white-space: nowrap; left: 0; }
         .link-active { opacity: 0.6; transform: translateY(0); pointer-events: auto; }
@@ -39,20 +39,12 @@
             height: 500px; 
             position: relative; 
             background-color: #000;
-            /* Initial hidden state */
             opacity: 0;
             transform: translateY(80px) scale(0.98);
-            transition: opacity 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), 
-                        transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: opacity 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
             filter: blur(10px);
         }
-        
-        #map-section.map-visible { 
-            opacity: 1; 
-            transform: translateY(0) scale(1); 
-            filter: blur(0px);
-        }
-
+        #map-section.map-visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
         #dark-map { height: 100%; width: 100%; filter: grayscale(100%) invert(100%) brightness(0.7) contrast(1.2); background-color: #000; }
 
         .red-map-label { background: transparent !important; border: none !important; color: #ff0000 !important; font-family: 'Oswald', sans-serif; font-weight: bold; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,0,0,0.5); }
@@ -64,11 +56,7 @@
             background: rgba(10, 10, 10, 0.98); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
         }
         #chat-window.active { transform: translateY(0); opacity: 1; pointer-events: auto; border-color: rgba(212, 175, 55, 0.3); }
-
-        .concierge-trigger {
-            background: #000; border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; font-family: 'Oswald', sans-serif;
-            letter-spacing: 3px; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+        .concierge-trigger { background: #000; border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; font-family: 'Oswald', sans-serif; letter-spacing: 3px; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .concierge-trigger:hover { border-color: #d4af37; color: #d4af37; }
     </style>
 </head>
@@ -84,7 +72,8 @@
     <audio id="hover-sound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
 
     <nav id="main-nav" class="fixed w-full z-50 px-10 py-8 flex justify-between items-center transition-all duration-500">
-        <h1 class="heading-font text-xl font-bold text-white tracking-[0.4em] cursor-pointer" onclick="window.scrollTo(0,0)">GROOMING LAB</h1>
+        <h1 class="heading-font text-xl font-bold text-white tracking-[0.4em] cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">GROOMING LAB</h1>
+        
         <div class="flex space-x-6 items-center">
             <div class="nav-container">
                 <a href="#services" id="nav-services" class="text-[10px] tracking-[0.3em] uppercase link-active text-white">Services</a>
@@ -112,22 +101,22 @@
                     <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
                 </div>
                 <h3 class="heading-font text-xl mb-2 text-white">Haircut</h3>
-                <p class="text-zinc-500 text-xs mb-6">Precision fading and scissor work.</p>
+                <p class="text-zinc-500 text-xs mb-6 uppercase tracking-widest">Precision Fades</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$45</span></div>
             </div>
             <div class="service-card p-5 rounded-2xl" id="trigger-card" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="300">
                 <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
-                <h3 class="heading-font text-xl mb-2 text-white">Shave</h3><p class="text-zinc-500 text-xs mb-6">Traditional hot towel razor shave.</p>
+                <h3 class="heading-font text-xl mb-2 text-white">Shave</h3><p class="text-zinc-500 text-xs mb-6 uppercase tracking-widest">Hot Towel Ritual</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$35</span></div>
             </div>
             <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="500">
                 <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
-                <h3 class="heading-font text-xl mb-2 text-white">Beard</h3><p class="text-zinc-500 text-xs mb-6">Expert sculpting and conditioning.</p>
+                <h3 class="heading-font text-xl mb-2 text-white">Beard</h3><p class="text-zinc-500 text-xs mb-6 uppercase tracking-widest">Sculpt & Tone</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$25</span></div>
             </div>
             <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="700">
                 <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
-                <h3 class="heading-font text-xl mb-2 text-white">Detan</h3><p class="text-zinc-500 text-xs mb-6">Deep skin revitalization therapy.</p>
+                <h3 class="heading-font text-xl mb-2 text-white">Detan</h3><p class="text-zinc-500 text-xs mb-6 uppercase tracking-widest">Skin Recovery</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$50</span></div>
             </div>
         </div>
@@ -175,11 +164,8 @@
         function enterStudio() {
             document.getElementById('loader').style.opacity = '0';
             setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1000);
-            
-            // Unlock audio context
             clickSound.play().then(() => { clickSound.pause(); clickSound.currentTime = 0; });
             hoverSound.play().then(() => { hoverSound.pause(); hoverSound.currentTime = 0; });
-            
             heroVideo.play();
             AOS.init({ duration: 1200, once: false, mirror: true });
         }
@@ -201,6 +187,7 @@
             if (window.scrollY > 50) { mainNav.classList.add('bg-black/95', 'py-4'); mainNav.classList.remove('py-8'); }
             else { mainNav.classList.remove('bg-black/95', 'py-4'); mainNav.classList.add('py-8'); }
 
+            // Link Swapper Logic
             if (window.scrollY >= serviceSection.offsetTop - 300) {
                 navServices.classList.replace('link-active', 'link-hidden');
                 navStudio.classList.replace('link-hidden', 'link-active');
@@ -209,11 +196,12 @@
                 navStudio.classList.replace('link-active', 'link-hidden');
             }
 
-            // Cinematic Map Reveal Trigger
+            // Map Reveal
             if (window.scrollY >= serviceSection.offsetTop + (serviceSection.offsetHeight / 3)) { 
                 mapSection.classList.add('map-visible'); 
             }
 
+            // Auto-trigger bot
             if (window.scrollY >= triggerCard.offsetTop && !botTriggered) {
                 playClick();
                 toggleChat();
