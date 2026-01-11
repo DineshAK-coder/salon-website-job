@@ -13,7 +13,7 @@
         body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e5e5e5; scroll-behavior: smooth; overflow-x: hidden; }
         .heading-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 4px; }
         
-        /* STYLISH NAVBAR (REMEMBERED) */
+        /* THE STYLISH NAVBAR (REMEMBERED) */
         .nav-container { position: relative; width: 70px; height: 20px; display: flex; justify-content: center; align-items: center; }
         #nav-services, #nav-studio { position: absolute; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); white-space: nowrap; left: 0; }
         .link-active { opacity: 0.6; transform: translateY(0); pointer-events: auto; }
@@ -21,7 +21,7 @@
         .link-hidden { opacity: 0; transform: translateY(10px); pointer-events: none; }
 
         /* Service Cards */
-        .service-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .service-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
         .service-card:hover { transform: translateY(-15px); border-color: #d4af37; background: rgba(255, 255, 255, 0.08); }
 
         /* Video Background */
@@ -65,6 +65,9 @@
 </head>
 <body>
 
+    <audio id="click-sound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" preload="auto"></audio>
+    <audio id="hover-sound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
+
     <nav id="main-nav" class="fixed w-full z-50 px-10 py-8 flex justify-between items-center transition-all duration-500">
         <h1 class="heading-font text-xl font-bold text-white tracking-[0.4em] cursor-pointer" onclick="window.scrollTo(0,0)">GROOMING LAB</h1>
         <div class="flex space-x-6 items-center">
@@ -89,25 +92,25 @@
 
     <section id="services" class="py-32 px-8 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="100">
                 <div class="overflow-hidden rounded-xl mb-6 h-72">
                     <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
                 </div>
                 <h3 class="heading-font text-xl mb-2 text-white">Haircut</h3>
-                <p class="text-zinc-500 text-xs mb-6 leading-relaxed">Precision fading and classic scissor work.</p>
+                <p class="text-zinc-500 text-xs mb-6">Precision fading and scissor work.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$45</span></div>
             </div>
-            <div class="service-card p-5 rounded-2xl" id="trigger-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-card p-5 rounded-2xl" id="trigger-card" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="300">
                 <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
                 <h3 class="heading-font text-xl mb-2 text-white">Shave</h3><p class="text-zinc-500 text-xs mb-6">Traditional hot towel razor shave.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$35</span></div>
             </div>
-            <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="500">
                 <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
                 <h3 class="heading-font text-xl mb-2 text-white">Beard</h3><p class="text-zinc-500 text-xs mb-6">Expert sculpting and conditioning.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$25</span></div>
             </div>
-            <div class="service-card p-5 rounded-2xl" data-aos="fade-up" data-aos-delay="700">
+            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="700">
                 <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
                 <h3 class="heading-font text-xl mb-2 text-white">Detan</h3><p class="text-zinc-500 text-xs mb-6">Deep skin revitalization therapy.</p>
                 <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$50</span></div>
@@ -147,12 +150,12 @@
             <div class="p-4 bg-black/50 border-t border-zinc-900 flex flex-col gap-3">
                 <input id="chat-input" type="text" placeholder="ENTER SELECTION..." 
                        class="bg-transparent text-[10px] tracking-widest outline-none text-white border-b border-zinc-800 pb-2 focus:border-yellow-700 transition uppercase"
-                       onkeypress="if(event.key === 'Enter') handleChat()">
-                <button onclick="handleChat()" class="heading-font text-[10px] tracking-[0.4em] text-zinc-500 hover:text-white transition text-left uppercase">Send Entry</button>
+                       onkeypress="if(event.key === 'Enter') { playClick(); handleChat(); }">
+                <button onclick="playClick(); handleChat();" class="heading-font text-[10px] tracking-[0.4em] text-zinc-500 hover:text-white transition text-left uppercase">Send Entry</button>
             </div>
         </div>
 
-        <button id="concierge-btn" onclick="toggleChat()" class="concierge-trigger px-8 py-3 text-[10px] uppercase">
+        <button id="concierge-btn" onclick="playClick(); toggleChat();" class="concierge-trigger px-8 py-3 text-[10px] uppercase">
             Open Concierge
         </button>
     </div>
@@ -161,6 +164,22 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         AOS.init({ duration: 1200, once: false, mirror: true });
+
+        // SOUND LOGIC
+        const clickSound = document.getElementById('click-sound');
+        const hoverSound = document.getElementById('hover-sound');
+
+        function playClick() {
+            clickSound.currentTime = 0;
+            clickSound.volume = 0.4;
+            clickSound.play();
+        }
+
+        function playHover() {
+            hoverSound.currentTime = 0;
+            hoverSound.volume = 0.2;
+            hoverSound.play();
+        }
 
         const coords = [12.9684, 80.2079];
         let botTriggered = false;
@@ -194,6 +213,7 @@
             }
 
             if (window.scrollY >= triggerCard.offsetTop && !botTriggered) {
+                playClick();
                 toggleChat();
                 botTriggered = true;
             }
