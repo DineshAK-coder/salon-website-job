@@ -13,14 +13,9 @@
         body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e5e5e5; scroll-behavior: smooth; overflow-x: hidden; }
         .heading-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 4px; }
         
-        /* PRE-LOADER SCREEN */
-        #loader {
-            position: fixed; inset: 0; z-index: 9999; background: #000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 1s ease;
-        }
+        #loader { position: fixed; inset: 0; z-index: 9999; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1s ease; }
 
-        /* STYLISH NAVBAR (SMART TRIPLE-SWAP) */
+        /* NAVBAR SMART SWAP */
         .nav-container { position: relative; width: 70px; height: 20px; display: flex; justify-content: center; align-items: center; }
         #nav-services, #nav-studio { position: absolute; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); white-space: nowrap; left: 0; }
         .link-active { opacity: 0.6; transform: translateY(0); pointer-events: auto; }
@@ -29,61 +24,62 @@
 
         /* Service Cards */
         .service-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
-        .service-card:hover { transform: translateY(-15px); border-color: #d4af37; background: rgba(255, 255, 255, 0.08); }
 
-        /* Video Overlay */
-        .video-overlay { background: linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.9) 100%); }
-
-        /* MAP SECTION - REFINED FADE IN */
+        /* MAP SECTION REVEAL */
         #map-section { 
-            height: 500px; 
-            position: relative; 
-            background-color: #000;
-            opacity: 0; 
-            transform: translateY(60px);
-            filter: blur(5px);
-            transition: opacity 1.2s ease-out, transform 1.2s ease-out, filter 1.2s ease-out;
+            height: 500px; position: relative; background-color: #000;
+            opacity: 0; transform: translateY(60px); filter: blur(5px);
+            transition: all 1.2s ease-out;
         }
-        
-        /* Active class for Map Fade-In */
-        #map-section.map-visible { 
-            opacity: 1; 
-            transform: translateY(0); 
-            filter: blur(0px);
-        }
+        #map-section.map-visible { opacity: 1; transform: translateY(0); filter: blur(0px); }
+        #dark-map { height: 100%; width: 100%; filter: grayscale(100%) invert(100%) brightness(0.7) contrast(1.2); }
 
-        #dark-map { height: 100%; width: 100%; filter: grayscale(100%) invert(100%) brightness(0.7) contrast(1.2); background-color: #000; }
         .red-map-label { background: transparent !important; border: none !important; color: #ff0000 !important; font-family: 'Oswald', sans-serif; font-weight: bold; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,0,0,0.5); }
-        .map-info-box { position: absolute; top: 50%; left: 2.5rem; transform: translateY(-50%); z-index: 10; padding: 2rem; background: rgba(0, 0, 0, 0.9); border-left: 3px solid #ff0000; backdrop-filter: blur(8px); max-width: 320px; }
 
-        /* CONCIERGE */
+        /* LANDMARK BOX - PC DEFAULT */
+        .map-info-box { 
+            position: absolute; top: 50%; left: 2.5rem; transform: translateY(-50%); z-index: 10; padding: 2rem; 
+            background: rgba(0, 0, 0, 0.95); border-left: 3px solid #ff0000; backdrop-filter: blur(8px); max-width: 320px; 
+        }
+
+        /* MOBILE FIXES */
+        @media (max-width: 768px) {
+            .map-info-box { 
+                position: static; transform: none; max-width: 100%; 
+                border-left: none; border-top: 1px solid #ff0000; text-align: center; padding: 2rem 1.5rem;
+                background: #000;
+            }
+            #map-section { height: 350px; }
+            #chat-window { width: 85vw !important; height: 380px !important; right: 0 !important; bottom: 80px !important; }
+            .concierge-trigger { padding: 10px 20px !important; font-size: 10px !important; }
+        }
+
+        /* CONCIERGE WINDOW */
         #chat-window { 
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(30px); opacity: 0; pointer-events: none;
             background: rgba(10, 10, 10, 0.98); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
+            position: absolute; bottom: 70px; right: 0; width: 320px; height: 450px;
         }
-        #chat-window.active { transform: translateY(0); opacity: 1; pointer-events: auto; border-color: rgba(212, 175, 55, 0.3); }
-        .concierge-trigger { background: #000; border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; font-family: 'Oswald', sans-serif; letter-spacing: 3px; transition: all 0.3s ease; }
+        #chat-window.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        .concierge-trigger { background: #000; border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; font-family: 'Oswald', sans-serif; letter-spacing: 3px; }
     </style>
 </head>
 <body>
 
     <div id="loader">
-        <button onclick="enterStudio()" class="heading-font text-white border border-zinc-800 px-10 py-4 tracking-[0.5em] hover:border-white transition-all duration-500">
-            ENTER STUDIO
-        </button>
+        <button onclick="enterStudio()" class="heading-font text-white border border-zinc-800 px-10 py-4 tracking-[0.5em] hover:border-white transition-all duration-500">ENTER STUDIO</button>
     </div>
 
     <audio id="click-sound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" preload="auto"></audio>
     <audio id="hover-sound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
 
-    <nav id="main-nav" class="fixed w-full z-50 px-10 py-8 flex justify-between items-center transition-all duration-500">
-        <h1 class="heading-font text-xl font-bold text-white tracking-[0.4em] cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">GROOMING LAB</h1>
+    <nav id="main-nav" class="fixed w-full z-50 px-6 md:px-10 py-8 flex justify-between items-center transition-all duration-500">
+        <h1 class="heading-font text-lg md:text-xl font-bold text-white tracking-[0.4em] cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">GROOMING LAB</h1>
         <div class="flex space-x-6 items-center">
             <div class="nav-container">
-                <a href="#services" id="nav-services" class="text-[10px] tracking-[0.3em] uppercase link-active text-white">Services</a>
-                <a href="#map-section" id="nav-studio" class="text-[10px] tracking-[0.3em] uppercase link-hidden text-white">Studio</a>
+                <a href="#services" id="nav-services" class="text-[10px] tracking-[0.2em] uppercase link-active text-white">Services</a>
+                <a href="#map-section" id="nav-studio" class="text-[10px] tracking-[0.2em] uppercase link-hidden text-white">Studio</a>
             </div>
-            <a href="#" onclick="toggleChat()" class="text-[10px] tracking-[0.3em] opacity-60 hover:opacity-100 transition uppercase text-white">Contact</a>
         </div>
     </nav>
 
@@ -93,33 +89,32 @@
         </video>
         <div class="absolute inset-0 z-1 video-overlay"></div>
         <div class="relative z-10 text-white">
-            <h2 data-aos="zoom-out" data-aos-duration="2000" class="heading-font text-7xl md:text-[10rem] mb-6 leading-none">THE STANDARD</h2>
-            <p data-aos="fade-up" data-aos-delay="800" class="text-xs tracking-[0.6em] text-zinc-400 uppercase">Legacy in every cut</p>
+            <h2 data-aos="zoom-out" data-aos-duration="2000" class="heading-font text-5xl md:text-[10rem] mb-6 leading-none">THE STANDARD</h2>
+            <p data-aos="fade-up" data-aos-delay="800" class="text-[10px] md:text-xs tracking-[0.6em] text-zinc-400 uppercase">Legacy in every cut</p>
         </div>
     </section>
 
-    <section id="services" class="py-32 px-8 max-w-7xl mx-auto">
+    <section id="services" class="py-20 md:py-32 px-6 md:px-8 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="100">
-                <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
-                <h3 class="heading-font text-xl mb-2 text-white">Haircut</h3>
-                <p class="text-zinc-500 text-xs mb-6 uppercase tracking-widest">Precision Fades</p>
-                <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$45</span></div>
+            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up">
+                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700"></div>
+                <h3 class="heading-font text-white">Haircut</h3>
+                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4"><span class="text-sm font-bold">$45</span></div>
             </div>
-            <div class="service-card p-5 rounded-2xl" id="trigger-card" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="300">
-                <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
-                <h3 class="heading-font text-xl mb-2 text-white">Shave</h3><p class="text-zinc-500 text-xs mb-6 uppercase tracking-widest">Hot Towel Ritual</p>
-                <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$35</span></div>
+            <div class="service-card p-5 rounded-2xl" id="trigger-card" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="100">
+                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700"></div>
+                <h3 class="heading-font text-white">Shave</h3>
+                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4"><span class="text-sm font-bold">$35</span></div>
             </div>
-            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="500">
-                <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
-                <h3 class="heading-font text-xl mb-2 text-white">Beard</h3><p class="text-zinc-500 text-xs mb-6 uppercase tracking-widest">Sculpt & Tone</p>
-                <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$25</span></div>
+            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="200">
+                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700"></div>
+                <h3 class="heading-font text-white">Beard</h3>
+                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4"><span class="text-sm font-bold">$25</span></div>
             </div>
-            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="700">
-                <div class="overflow-hidden rounded-xl mb-6 h-72"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000"></div>
-                <h3 class="heading-font text-xl mb-2 text-white">Detan</h3><p class="text-zinc-500 text-xs mb-6 uppercase tracking-widest">Skin Recovery</p>
-                <div class="flex justify-between items-center border-t border-zinc-800 pt-4"><span class="text-sm font-bold">$50</span></div>
+            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="300">
+                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700"></div>
+                <h3 class="heading-font text-white">Detan</h3>
+                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4"><span class="text-sm font-bold">$50</span></div>
             </div>
         </div>
     </section>
@@ -128,29 +123,26 @@
         <div id="dark-map"></div>
         <div class="map-info-box">
             <h4 class="heading-font text-[#ff0000] text-lg mb-2">Our Landmark</h4>
-            <p class="text-[#cc0000] text-[10px] leading-relaxed uppercase tracking-widest mb-4">Adjacent to the Grand Clock Tower, Old Town District.</p>
-            <div class="border-t border-red-900/40 pt-4">
-                <span class="text-zinc-500 text-[9px] uppercase tracking-widest">GPS Coordinates</span>
-                <p class="text-[#ff0000] text-[11px] font-mono mt-1">12.9684° N, 80.2079° E</p>
-            </div>
+            <p class="text-[#cc0000] text-[10px] leading-relaxed uppercase tracking-widest mb-2 md:mb-4">Old Town District, Near Clock Tower</p>
+            <p class="text-white text-[11px] font-mono">12.9684° N, 80.2079° E</p>
         </div>
     </section>
 
-    <div class="fixed bottom-10 right-10 z-[100]">
-        <div id="chat-window" class="absolute bottom-16 right-0 w-80 h-[450px] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-5 border-b border-zinc-800 flex justify-between items-center text-white">
-                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-yellow-600 rounded-full animate-pulse"></span><span class="heading-font text-[10px] tracking-[0.3em]">Digital Concierge</span></div>
-                <button onclick="toggleChat()" class="text-zinc-600 hover:text-white transition text-xl">&times;</button>
+    <div class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100]">
+        <div id="chat-window" class="flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-zinc-900 flex justify-between items-center">
+                <span class="heading-font text-[9px] tracking-[0.2em] text-white">Digital Concierge</span>
+                <button onclick="toggleChat()" class="text-zinc-600 transition text-xl">&times;</button>
             </div>
-            <div id="chat-content" class="flex-1 p-6 overflow-y-auto text-[12px] space-y-6 text-zinc-400">
-                <div class="border-l border-zinc-800 pl-4 py-1 italic">Greetings. How may we assist you? <br><br> 1. Haircut | 2. Shave | 3. Beard | 4. Detan | 5. Reservation</div>
+            <div id="chat-content" class="flex-1 p-5 overflow-y-auto text-[11px] space-y-4 text-zinc-400">
+                <div class="border-l border-zinc-800 pl-4 py-1">Greetings. <br><br> 1. Haircut | 2. Shave | 3. Beard | 4. Reservation</div>
             </div>
-            <div class="p-4 bg-black/50 border-t border-zinc-900 flex flex-col gap-3">
-                <input id="chat-input" type="text" placeholder="ENTER SELECTION..." class="bg-transparent text-[10px] tracking-widest outline-none text-white border-b border-zinc-800 pb-2 focus:border-yellow-700 transition uppercase" onkeypress="if(event.key === 'Enter') { playClick(); handleChat(); }">
-                <button onclick="playClick(); handleChat();" class="heading-font text-[10px] tracking-[0.4em] text-zinc-500 hover:text-white transition text-left uppercase">Send Entry</button>
+            <div class="p-4 bg-black/50 border-t border-zinc-900 flex flex-col gap-2">
+                <input id="chat-input" type="text" placeholder="SELECTION..." class="bg-transparent text-[10px] outline-none text-white border-b border-zinc-800 pb-2 uppercase" onkeypress="if(event.key === 'Enter') { playClick(); handleChat(); }">
+                <button onclick="playClick(); handleChat();" class="heading-font text-[9px] text-zinc-500 uppercase text-left">Send Entry</button>
             </div>
         </div>
-        <button id="concierge-btn" onclick="playClick(); toggleChat();" class="concierge-trigger px-8 py-3 text-[10px] uppercase">Open Concierge</button>
+        <button id="concierge-btn" onclick="playClick(); toggleChat();" class="concierge-trigger px-6 py-3 text-[9px] uppercase">Concierge</button>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -163,14 +155,10 @@
         function enterStudio() {
             document.getElementById('loader').style.opacity = '0';
             setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1000);
-            
-            // Unlock audio context
             clickSound.play().then(() => { clickSound.pause(); clickSound.currentTime = 0; });
             hoverSound.play().then(() => { hoverSound.pause(); hoverSound.currentTime = 0; });
-            
             heroVideo.play();
-            // FIXED: Added mirror: true so it re-animates from bottom
-            AOS.init({ duration: 1200, once: false, mirror: true });
+            AOS.init({ duration: 1000, once: false, mirror: true });
         }
 
         function playClick() { clickSound.currentTime = 0; clickSound.volume = 0.4; clickSound.play(); }
@@ -180,26 +168,17 @@
         let botTriggered = false;
 
         window.addEventListener('scroll', () => {
-            const serviceSection = document.getElementById('services');
-            const triggerCard = document.getElementById('trigger-card');
+            const scrollPos = window.scrollY;
+            const servicesSection = document.getElementById('services');
             const mapSection = document.getElementById('map-section');
             const navServices = document.getElementById('nav-services');
             const navStudio = document.getElementById('nav-studio');
-            const mainNav = document.getElementById('main-nav');
-            const scrollPos = window.scrollY;
-            
-            // Navbar Shrink
-            if (scrollPos > 50) { mainNav.classList.add('bg-black/95', 'py-4'); mainNav.classList.remove('py-8'); }
-            else { mainNav.classList.remove('bg-black/95', 'py-4'); mainNav.classList.add('py-8'); }
 
-            // Triple-Swap logic
-            const servicesTop = serviceSection.offsetTop - 300;
-            const mapTop = mapSection.offsetTop - 300;
-
-            if (scrollPos >= mapTop) {
+            // Navbar Swap logic
+            if (scrollPos >= mapSection.offsetTop - 400) {
                 navServices.classList.replace('link-hidden', 'link-active');
                 navStudio.classList.replace('link-active', 'link-hidden');
-            } else if (scrollPos >= servicesTop) {
+            } else if (scrollPos >= servicesSection.offsetTop - 300) {
                 navServices.classList.replace('link-active', 'link-hidden');
                 navStudio.classList.replace('link-hidden', 'link-active');
             } else {
@@ -207,19 +186,17 @@
                 navStudio.classList.replace('link-active', 'link-hidden');
             }
 
-            // MAP REVEAL TRIGGER (Works both ways)
+            // Map Reveal logic
             const mapRect = mapSection.getBoundingClientRect();
-            if (mapRect.top < window.innerHeight - 150) {
-                mapSection.classList.add('map-visible');
-            } else {
-                mapSection.classList.remove('map-visible');
-            }
+            if (mapRect.top < window.innerHeight - 150) { mapSection.classList.add('map-visible'); } 
+            else { mapSection.classList.remove('map-visible'); }
 
-            // Auto-trigger bot
-            if (scrollPos >= triggerCard.offsetTop && !botTriggered) { playClick(); toggleChat(); botTriggered = true; }
+            // AUTO-OPEN CHATBOT (PC ONLY)
+            if (window.innerWidth > 768 && scrollPos >= document.getElementById('trigger-card').offsetTop && !botTriggered) {
+                playClick(); toggleChat(); botTriggered = true;
+            }
         });
 
-        // Initialize Map
         const map = L.map('dark-map', { zoomControl: false, attributionControl: false }).setView(coords, 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         L.marker(coords, { icon: L.divIcon({ className: 'red-map-label', html: 'Grooming Lab', iconSize: [120, 20], iconAnchor: [60, 25] }) }).addTo(map);
@@ -229,17 +206,12 @@
         function handleChat() {
             const input = document.getElementById('chat-input');
             const content = document.getElementById('chat-content');
-            const val = input.value.trim().toLowerCase();
-            if(!val) return;
-            content.innerHTML += `<div class="text-right text-white uppercase tracking-widest text-[10px]">> ${input.value}</div>`;
+            if(!input.value.trim()) return;
+            content.innerHTML += `<div class="text-right text-white uppercase text-[9px]">> ${input.value}</div>`;
             input.value = '';
             content.scrollTop = content.scrollHeight;
             setTimeout(() => {
-                let reply = "Specify selection (1-5) or contact curator.";
-                const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-                if (phoneRegex.test(val.replace(/\s/g, ""))) reply = "Entry Received. Curator will contact you shortly.";
-                else if (['1','2','3','4','5'].some(n => val.includes(n))) reply = "Acknowledged. Provide phone number.";
-                content.innerHTML += `<div class="border-l border-yellow-800/50 pl-4 py-1 text-zinc-300 uppercase tracking-tighter">${reply}</div>`;
+                content.innerHTML += `<div class="border-l border-yellow-800/50 pl-4 py-1 text-zinc-300 uppercase tracking-tighter">Awaiting digits to confirm.</div>`;
                 content.scrollTop = content.scrollHeight;
             }, 800);
         }
