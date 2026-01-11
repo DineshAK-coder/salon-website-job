@@ -7,6 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@500&display=swap');
         
@@ -41,7 +44,7 @@
             opacity: 0; transform: translateY(10px); transition: all 0.4s ease;
             background: #fff; color: #000; font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
         }
-        @media (max-width: 768px) { .card-book-btn { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) { .card-book-btn { opacity: 1 !important; transform: translateY(0) !important; } }
         .service-card:hover .card-book-btn { opacity: 1; transform: translateY(0); }
 
         /* MAP */
@@ -172,7 +175,13 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <script>
+        // REPLACE THESE WITH YOUR SUPABASE DETAILS
+        const SUPABASE_URL = 'https://kcjtwznhepomzpgkezwi.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjanR3em5oZXBvbXpwZ2tlendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgxMTQyODgsImV4cCI6MjA4MzY5MDI4OH0.wLjUk2MDitcCeMrp9H-KHoj4XmkXYi7aVm4cqc1IgJ0';
+        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         const clickSound = document.getElementById('click-sound');
         const hoverSound = document.getElementById('hover-sound');
         const heroVideo = document.getElementById('hero-video');
@@ -205,14 +214,9 @@
             const navStudio = document.getElementById('nav-studio');
             const mainNav = document.getElementById('main-nav');
 
-            // NEW NAVBAR BG LOGIC
-            if (scrollPos > 10) { 
-                mainNav.classList.add('nav-scrolled'); 
-            } else { 
-                mainNav.classList.remove('nav-scrolled'); 
-            }
+            if (scrollPos > 10) { mainNav.classList.add('nav-scrolled'); } 
+            else { mainNav.classList.remove('nav-scrolled'); }
 
-            // CYCLE LINKS
             if (scrollPos >= mapSection.offsetTop - 300) {
                 navServices.classList.replace('link-hidden', 'link-active');
                 navStudio.classList.replace('link-active', 'link-hidden');
@@ -250,7 +254,7 @@
             setTimeout(() => { handleChat(); input.focus(); }, 100);
         }
 
-        function handleChat() {
+        async function handleChat() {
             const input = document.getElementById('chat-input');
             const content = document.getElementById('chat-content');
             const userVal = input.value.trim();
@@ -260,7 +264,7 @@
             input.value = '';
             content.scrollTop = content.scrollHeight;
 
-            setTimeout(() => {
+            setTimeout(async () => {
                 let reply = "";
                 
                 if (chatState === "awaiting_service") {
@@ -285,8 +289,21 @@
                     chatState = "awaiting_phone";
                 }
                 else if (chatState === "awaiting_phone") {
-                    reply = `ENTRY RECEIVED. A curator will SMS your ${bookingType === 'queue' ? 'Token' : 'Confirmation for ' + appointmentTime} to ${userVal} shortly.`;
-                    console.log("SENDING TO DB:", { service: selectedService, type: bookingType, time: appointmentTime || "NOW", phone: userVal });
+                    // PUSH DATA TO SUPABASE
+                    const { error } = await sb.from('bookings').insert([{
+                        service: selectedService,
+                        booking_type: bookingType,
+                        scheduled_time: appointmentTime || "NOW",
+                        phone: userVal,
+                        status: 'waiting'
+                    }]);
+
+                    if (error) {
+                        reply = "SYSTEM ERROR. Please try again later.";
+                        console.error(error);
+                    } else {
+                        reply = `ENTRY RECEIVED. A curator will SMS your ${bookingType === 'queue' ? 'Token' : 'Confirmation for ' + appointmentTime} to ${userVal} shortly.`;
+                    }
                     chatState = "awaiting_service"; 
                     appointmentTime = "";
                 }
