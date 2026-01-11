@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Grooming Lab | Classic Studio</title>
+    <title>The Grooming Lab | Hybrid Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -16,14 +16,14 @@
         #loader { position: fixed; inset: 0; z-index: 9999; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1s ease; }
 
         /* NAVBAR SMART SWAP */
-        .nav-container { position: relative; width: 70px; height: 20px; display: flex; justify-content: center; align-items: center; }
+        .nav-container { position: relative; width: 80px; height: 20px; display: flex; justify-content: center; align-items: center; }
         #nav-services, #nav-studio { position: absolute; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); white-space: nowrap; left: 0; }
         .link-active { opacity: 0.6; transform: translateY(0); pointer-events: auto; }
         .link-active:hover { opacity: 1; }
         .link-hidden { opacity: 0; transform: translateY(10px); pointer-events: none; }
 
-        /* Service Cards */
-        .service-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
+        /* Service Cards & Color Transition */
+        .service-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
         .service-card img { filter: grayscale(100%); transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
         .service-card:hover { transform: translateY(-15px); border-color: #d4af37; background: rgba(255, 255, 255, 0.08); }
         .service-card:hover img { filter: grayscale(0%); }
@@ -32,7 +32,6 @@
             opacity: 0; transform: translateY(10px); transition: all 0.4s ease;
             background: #fff; color: #000; font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
         }
-        /* Mobile: Keep button visible */
         @media (max-width: 768px) { .card-book-btn { opacity: 1; transform: translateY(0); } }
         .service-card:hover .card-book-btn { opacity: 1; transform: translateY(0); }
 
@@ -41,7 +40,11 @@
         #map-section.map-visible { opacity: 1; transform: translateY(0); filter: blur(0px); }
         #dark-map { height: 100%; width: 100%; filter: grayscale(100%) invert(100%) brightness(0.7) contrast(1.2); }
         .red-map-label { background: transparent !important; border: none !important; color: #ff0000 !important; font-family: 'Oswald', sans-serif; font-weight: bold; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,0,0,0.5); }
-        .map-info-box { position: absolute; top: 50%; left: 2.5rem; transform: translateY(-50%); z-index: 10; padding: 2rem; background: rgba(0, 0, 0, 0.95); border-left: 3px solid #ff0000; backdrop-filter: blur(8px); max-width: 320px; }
+        
+        .map-info-box { 
+            position: absolute; top: 50%; left: 2.5rem; transform: translateY(-50%); z-index: 10; padding: 2rem; 
+            background: rgba(0, 0, 0, 0.95); border-left: 3px solid #ff0000; backdrop-filter: blur(8px); max-width: 320px; 
+        }
 
         @media (max-width: 768px) {
             .map-info-box { position: static; transform: none; max-width: 100%; border-left: none; border-top: 1px solid #ff0000; text-align: center; padding: 2rem 1.5rem; background: #000; }
@@ -49,8 +52,12 @@
             #chat-window { width: 90vw !important; height: 380px !important; right: 5vw !important; bottom: 80px !important; }
         }
 
-        /* CONCIERGE */
-        #chat-window { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(30px); opacity: 0; pointer-events: none; background: rgba(10, 10, 10, 0.98); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); position: absolute; bottom: 70px; right: 0; width: 320px; height: 450px; }
+        /* CONCIERGE WINDOW */
+        #chat-window { 
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(30px); opacity: 0; pointer-events: none;
+            background: rgba(10, 10, 10, 0.98); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
+            position: absolute; bottom: 70px; right: 0; width: 320px; height: 450px;
+        }
         #chat-window.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
         .concierge-trigger { background: #000; border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; font-family: 'Oswald', sans-serif; letter-spacing: 3px; }
     </style>
@@ -78,7 +85,7 @@
         <video id="hero-video" muted loop playsinline class="absolute z-0 w-auto min-w-full min-h-full max-w-none grayscale brightness-[0.4]">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-barber-cutting-hair-with-a-pair-of-scissors-19409-large.mp4" type="video/mp4">
         </video>
-        <div class="absolute inset-0 z-1 video-overlay"></div>
+        <div class="absolute inset-0 z-1 bg-black/50"></div>
         <div class="relative z-10 text-white">
             <h2 data-aos="zoom-out" data-aos-duration="2000" class="heading-font text-5xl md:text-[10rem] mb-6 leading-none">THE STANDARD</h2>
             <p data-aos="fade-up" data-aos-delay="800" class="text-[10px] md:text-xs tracking-[0.6em] text-zinc-400 uppercase">Legacy in every cut</p>
@@ -129,19 +136,22 @@
         <div id="dark-map"></div>
         <div class="map-info-box">
             <h4 class="heading-font text-[#ff0000] text-lg mb-2">Our Landmark</h4>
-            <p class="text-[#cc0000] text-[10px] leading-relaxed uppercase tracking-widest mb-2 md:mb-4">Old Town District, Near Clock Tower</p>
-            <p class="text-white text-[11px] font-mono">12.9684° N, 80.2079° E</p>
+            <p class="text-[#cc0000] text-[10px] leading-relaxed uppercase tracking-widest mb-4">Old Town District, Near Clock Tower</p>
+            <p class="text-white text-[11px] font-mono mt-1">12.9684° N, 80.2079° E</p>
         </div>
     </section>
 
     <div class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100]">
         <div id="chat-window" class="flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 border-b border-zinc-900 flex justify-between items-center text-white">
-                <span class="heading-font text-[9px] tracking-[0.2em]">Digital Concierge</span>
+                <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 bg-yellow-600 rounded-full animate-pulse"></span>
+                    <span class="heading-font text-[9px] tracking-[0.2em]">Digital Concierge</span>
+                </div>
                 <button onclick="toggleChat()" class="text-zinc-600 transition text-xl">&times;</button>
             </div>
             <div id="chat-content" class="flex-1 p-5 overflow-y-auto text-[11px] space-y-4 text-zinc-400">
-                <div class="border-l border-zinc-800 pl-4 py-1">Greetings. <br><br> 1. Haircut | 2. Shave | 3. Beard | 4. Reservation</div>
+                <div class="border-l border-zinc-800 pl-4 py-1 italic">Greetings. <br><br> 1. Haircut | 2. Shave | 3. Beard | 4. Reservation</div>
             </div>
             <div class="p-4 bg-black/50 border-t border-zinc-900 flex flex-col gap-2">
                 <input id="chat-input" type="text" placeholder="SELECTION..." class="bg-transparent text-[10px] outline-none text-white border-b border-zinc-800 pb-2 uppercase" onkeypress="if(event.key === 'Enter') { playClick(); handleChat(); }">
@@ -158,6 +168,12 @@
         const hoverSound = document.getElementById('hover-sound');
         const heroVideo = document.getElementById('hero-video');
 
+        // CONVERSATION STATE
+        let chatState = "awaiting_service"; 
+        let selectedService = "";
+        let bookingType = "";
+        let appointmentTime = "";
+
         function enterStudio() {
             document.getElementById('loader').style.opacity = '0';
             setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1000);
@@ -172,7 +188,6 @@
 
         const coords = [12.9684, 80.2079];
         let botTriggered = false;
-        let chatState = "awaiting_service"; 
 
         window.addEventListener('scroll', () => {
             const scrollPos = window.scrollY;
@@ -181,9 +196,10 @@
             const navServices = document.getElementById('nav-services');
             const navStudio = document.getElementById('nav-studio');
 
-            if (scrollPos >= mapSection.offsetTop - 400) {
-                navServices.classList.replace('link-active', 'link-hidden');
-                navStudio.classList.replace('link-hidden', 'link-active');
+            // NAVBAR CYCLE
+            if (scrollPos >= mapSection.offsetTop - 300) {
+                navServices.classList.replace('link-hidden', 'link-active');
+                navStudio.classList.replace('link-active', 'link-hidden');
             } else if (scrollPos >= servicesSection.offsetTop - 300) {
                 navServices.classList.replace('link-active', 'link-hidden');
                 navStudio.classList.replace('link-hidden', 'link-active');
@@ -192,16 +208,18 @@
                 navStudio.classList.replace('link-active', 'link-hidden');
             }
 
+            // MAP REVEAL
             const mapRect = mapSection.getBoundingClientRect();
             if (mapRect.top < window.innerHeight - 150) { mapSection.classList.add('map-visible'); } 
             else { mapSection.classList.remove('map-visible'); }
 
+            // AUTO-OPEN BOT
             if (window.innerWidth > 768 && scrollPos >= document.getElementById('trigger-card').offsetTop && !botTriggered) {
                 playClick(); toggleChat(); botTriggered = true;
             }
         });
 
-        // Map
+        // MAP
         const map = L.map('dark-map', { zoomControl: false, attributionControl: false }).setView(coords, 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         L.marker(coords, { icon: L.divIcon({ className: 'red-map-label', html: 'Grooming Lab', iconSize: [120, 20], iconAnchor: [60, 25] }) }).addTo(map);
@@ -209,25 +227,17 @@
 
         function toggleChat() { document.getElementById('chat-window').classList.toggle('active'); document.getElementById('chat-input').focus(); }
         
-        // FIXED MOBILE TRIGGER
         function bookFromCard(serviceName) {
             playClick();
+            chatState = "awaiting_service"; 
             const chatWin = document.getElementById('chat-window');
-            if(!chatWin.classList.contains('active')) {
-                chatWin.classList.add('active');
-            }
-            
-            // Explicit focus and value injection for mobile
+            if(!chatWin.classList.contains('active')) chatWin.classList.add('active');
             const input = document.getElementById('chat-input');
             input.value = serviceName;
-            
-            // Wait 100ms to ensure class list is updated before running logic
-            setTimeout(() => {
-                handleChat();
-                input.focus();
-            }, 100);
+            setTimeout(() => { handleChat(); input.focus(); }, 100);
         }
 
+        // IMPROVED STEP-BY-STEP CHAT
         function handleChat() {
             const input = document.getElementById('chat-input');
             const content = document.getElementById('chat-content');
@@ -240,12 +250,33 @@
 
             setTimeout(() => {
                 let reply = "";
+                
                 if (chatState === "awaiting_service") {
-                    reply = `Acknowledged. Requesting digits for ${userVal} confirmation.`;
+                    selectedService = userVal;
+                    reply = `EXCELLENT. For ${selectedService}, would you like to:<br>1. JOIN LIVE QUEUE (Wait: ~20m)<br>2. BOOK TIME SLOT`;
+                    chatState = "awaiting_choice";
+                } 
+                else if (chatState === "awaiting_choice") {
+                    if (userVal.includes("1") || userVal.toLowerCase().includes("queue")) {
+                        bookingType = "queue";
+                        reply = "Joining Live Queue. Please provide your Phone Number for your Digital Token.";
+                        chatState = "awaiting_phone";
+                    } else {
+                        bookingType = "appointment";
+                        reply = "Booking Time Slot. What is your preferred time? (e.g., 4:30 PM)";
+                        chatState = "awaiting_time";
+                    }
+                }
+                else if (chatState === "awaiting_time") {
+                    appointmentTime = userVal;
+                    reply = `NOTED: ${appointmentTime}. Finally, please provide your Phone Number to confirm.`;
                     chatState = "awaiting_phone";
-                } else {
-                    reply = "Entry Received. Our curator will contact you shortly to finalize your reservation.";
-                    chatState = "awaiting_service";
+                }
+                else if (chatState === "awaiting_phone") {
+                    reply = `ENTRY RECEIVED. A curator will SMS your ${bookingType === 'queue' ? 'Token' : 'Confirmation for ' + appointmentTime} to ${userVal} shortly.`;
+                    console.log("SENDING TO DB:", { service: selectedService, type: bookingType, time: appointmentTime || "NOW", phone: userVal });
+                    chatState = "awaiting_service"; 
+                    appointmentTime = "";
                 }
 
                 content.innerHTML += `<div class="border-l border-yellow-800/50 pl-4 py-1 text-zinc-300 uppercase tracking-tighter">${reply}</div>`;
