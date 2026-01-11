@@ -22,7 +22,7 @@
         .link-active:hover { opacity: 1; }
         .link-hidden { opacity: 0; transform: translateY(10px); pointer-events: none; }
 
-        /* Service Cards & Color Transition */
+        /* Service Cards */
         .service-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
         .service-card img { filter: grayscale(100%); transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
         .service-card:hover { transform: translateY(-15px); border-color: #d4af37; background: rgba(255, 255, 255, 0.08); }
@@ -32,6 +32,8 @@
             opacity: 0; transform: translateY(10px); transition: all 0.4s ease;
             background: #fff; color: #000; font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
         }
+        /* Mobile: Keep button visible */
+        @media (max-width: 768px) { .card-book-btn { opacity: 1; transform: translateY(0); } }
         .service-card:hover .card-book-btn { opacity: 1; transform: translateY(0); }
 
         /* MAP SECTION */
@@ -44,8 +46,7 @@
         @media (max-width: 768px) {
             .map-info-box { position: static; transform: none; max-width: 100%; border-left: none; border-top: 1px solid #ff0000; text-align: center; padding: 2rem 1.5rem; background: #000; }
             #map-section { height: 350px; }
-            #chat-window { width: 85vw !important; height: 380px !important; right: 0 !important; bottom: 80px !important; }
-            .card-book-btn { opacity: 1; transform: translateY(0); } 
+            #chat-window { width: 90vw !important; height: 380px !important; right: 5vw !important; bottom: 80px !important; }
         }
 
         /* CONCIERGE */
@@ -94,6 +95,7 @@
                     <button onclick="bookFromCard('Signature Haircut')" class="card-book-btn px-4 py-2 uppercase">Book Now</button>
                 </div>
             </div>
+            
             <div class="service-card p-5 rounded-2xl" id="trigger-card" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="100">
                 <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover"></div>
                 <h3 class="heading-font text-white">Shave</h3>
@@ -102,6 +104,7 @@
                     <button onclick="bookFromCard('Classic Shave')" class="card-book-btn px-4 py-2 uppercase">Book Now</button>
                 </div>
             </div>
+
             <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="200">
                 <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover"></div>
                 <h3 class="heading-font text-white">Beard</h3>
@@ -110,6 +113,7 @@
                     <button onclick="bookFromCard('Beard Sculpt')" class="card-book-btn px-4 py-2 uppercase">Book Now</button>
                 </div>
             </div>
+
             <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="300">
                 <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover"></div>
                 <h3 class="heading-font text-white">Detan</h3>
@@ -168,7 +172,7 @@
 
         const coords = [12.9684, 80.2079];
         let botTriggered = false;
-        let chatState = "awaiting_service"; // NEW: Track chat progress
+        let chatState = "awaiting_service"; 
 
         window.addEventListener('scroll', () => {
             const scrollPos = window.scrollY;
@@ -197,6 +201,7 @@
             }
         });
 
+        // Map
         const map = L.map('dark-map', { zoomControl: false, attributionControl: false }).setView(coords, 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         L.marker(coords, { icon: L.divIcon({ className: 'red-map-label', html: 'Grooming Lab', iconSize: [120, 20], iconAnchor: [60, 25] }) }).addTo(map);
@@ -204,35 +209,43 @@
 
         function toggleChat() { document.getElementById('chat-window').classList.toggle('active'); document.getElementById('chat-input').focus(); }
         
+        // FIXED MOBILE TRIGGER
         function bookFromCard(serviceName) {
             playClick();
-            if(!document.getElementById('chat-window').classList.contains('active')) toggleChat();
+            const chatWin = document.getElementById('chat-window');
+            if(!chatWin.classList.contains('active')) {
+                chatWin.classList.add('active');
+            }
+            
+            // Explicit focus and value injection for mobile
             const input = document.getElementById('chat-input');
             input.value = serviceName;
-            handleChat();
+            
+            // Wait 100ms to ensure class list is updated before running logic
+            setTimeout(() => {
+                handleChat();
+                input.focus();
+            }, 100);
         }
 
-        // IMPROVED: Handle State Logic
         function handleChat() {
             const input = document.getElementById('chat-input');
             const content = document.getElementById('chat-content');
             const userVal = input.value.trim();
             if(!userVal) return;
 
-            // Display user message
             content.innerHTML += `<div class="text-right text-white uppercase text-[9px]">> ${userVal}</div>`;
             input.value = '';
             content.scrollTop = content.scrollHeight;
 
             setTimeout(() => {
                 let reply = "";
-                
                 if (chatState === "awaiting_service") {
                     reply = `Acknowledged. Requesting digits for ${userVal} confirmation.`;
-                    chatState = "awaiting_phone"; // Change state to expect phone number next
-                } else if (chatState === "awaiting_phone") {
+                    chatState = "awaiting_phone";
+                } else {
                     reply = "Entry Received. Our curator will contact you shortly to finalize your reservation.";
-                    chatState = "awaiting_service"; // Reset state for next interaction
+                    chatState = "awaiting_service";
                 }
 
                 content.innerHTML += `<div class="border-l border-yellow-800/50 pl-4 py-1 text-zinc-300 uppercase tracking-tighter">${reply}</div>`;
