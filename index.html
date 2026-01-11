@@ -105,6 +105,14 @@
     </section>
 
     <section id="services" class="py-20 md:py-32 px-6 md:px-8 max-w-7xl mx-auto">
+        
+        <div class="text-center mb-16" data-aos="fade-up">
+            <div class="inline-block border border-zinc-800 px-8 py-4 rounded-full bg-zinc-900/30 backdrop-blur-sm">
+                <span class="text-[9px] text-zinc-500 uppercase tracking-[0.3em]">Live Studio Load:</span>
+                <span id="wait-time-display" class="text-[10px] text-white font-bold ml-2 uppercase tracking-[0.2em]">Calculating...</span>
+            </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up">
                 <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800" class="w-full h-full object-cover"></div>
@@ -115,43 +123,13 @@
                 </div>
             </div>
             
-            <div class="service-card p-5 rounded-2xl" id="trigger-card" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="100">
-                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover"></div>
-                <h3 class="heading-font text-white">Shave</h3>
-                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4">
-                    <span class="text-sm font-bold">$35</span>
-                    <button onclick="bookFromCard('Classic Shave')" class="card-book-btn px-4 py-2 uppercase">Book Now</button>
-                </div>
-            </div>
-
-            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="200">
-                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover"></div>
-                <h3 class="heading-font text-white">Beard</h3>
-                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4">
-                    <span class="text-sm font-bold">$25</span>
-                    <button onclick="bookFromCard('Beard Sculpt')" class="card-book-btn px-4 py-2 uppercase">Book Now</button>
-                </div>
-            </div>
-
-            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="300">
-                <div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover"></div>
-                <h3 class="heading-font text-white">Detan</h3>
-                <div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4">
-                    <span class="text-sm font-bold">$50</span>
-                    <button onclick="bookFromCard('Skin Therapy')" class="card-book-btn px-4 py-2 uppercase">Book Now</button>
-                </div>
-            </div>
+            <div class="service-card p-5 rounded-2xl" id="trigger-card" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="100"><div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800" class="w-full h-full object-cover"></div><h3 class="heading-font text-white">Shave</h3><div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4"><span class="text-sm font-bold">$35</span><button onclick="bookFromCard('Classic Shave')" class="card-book-btn px-4 py-2 uppercase">Book Now</button></div></div>
+            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="200"><div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800" class="w-full h-full object-cover"></div><h3 class="heading-font text-white">Beard</h3><div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4"><span class="text-sm font-bold">$25</span><button onclick="bookFromCard('Beard Sculpt')" class="card-book-btn px-4 py-2 uppercase">Book Now</button></div></div>
+            <div class="service-card p-5 rounded-2xl" onmouseenter="playHover()" data-aos="fade-up" data-aos-delay="300"><div class="overflow-hidden rounded-xl mb-6 h-64 md:h-72"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800" class="w-full h-full object-cover"></div><h3 class="heading-font text-white">Detan</h3><div class="flex justify-between items-center border-t border-zinc-800 mt-4 pt-4"><span class="text-sm font-bold">$50</span><button onclick="bookFromCard('Skin Therapy')" class="card-book-btn px-4 py-2 uppercase">Book Now</button></div></div>
         </div>
     </section>
 
-    <section id="map-section">
-        <div id="dark-map"></div>
-        <div class="map-info-box">
-            <h4 class="heading-font text-[#ff0000] text-lg mb-2">Our Landmark</h4>
-            <p class="text-[#cc0000] text-[10px] leading-relaxed uppercase tracking-widest mb-4">Old Town District, Near Clock Tower</p>
-            <p class="text-white text-[11px] font-mono mt-1">12.9684° N, 80.2079° E</p>
-        </div>
-    </section>
+    <section id="map-section"><div id="dark-map"></div><div class="map-info-box"><h4 class="heading-font text-[#ff0000] text-lg mb-2">Our Landmark</h4><p class="text-[#cc0000] text-[10px] leading-relaxed uppercase tracking-widest mb-4">Old Town District, Near Clock Tower</p><p class="text-white text-[11px] font-mono mt-1">12.9684° N, 80.2079° E</p></div></section>
 
     <div class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100]">
         <div id="chat-window" class="flex flex-col shadow-2xl overflow-hidden">
@@ -177,7 +155,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <script>
-        // REPLACE THESE WITH YOUR SUPABASE DETAILS
+        // REPLACE WITH YOUR SUPABASE DETAILS
         const SUPABASE_URL = 'https://kcjtwznhepomzpgkezwi.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjanR3em5oZXBvbXpwZ2tlendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgxMTQyODgsImV4cCI6MjA4MzY5MDI4OH0.wLjUk2MDitcCeMrp9H-KHoj4XmkXYi7aVm4cqc1IgJ0';
         const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -190,6 +168,26 @@
         let selectedService = "";
         let bookingType = "";
         let appointmentTime = "";
+        let currentWaitMins = 0;
+
+        // LIVE WAIT TIME CALCULATOR
+        async function updateWaitTime() {
+            const { data } = await sb.from('bookings').select('booking_type').neq('status', 'done');
+            if (data) {
+                let queueCount = data.filter(i => i.booking_type === 'queue').length;
+                let apptCount = data.filter(i => i.booking_type === 'appointment').length;
+                
+                // Logic: 20m per queue person, 30m buffer per appointment
+                currentWaitMins = (queueCount * 20) + (apptCount * 30);
+                
+                const display = document.getElementById('wait-time-display');
+                if (apptCount > 0) {
+                    display.innerHTML = `${currentWaitMins} Mins <span class="text-red-500 ml-2">(High Demand)</span>`;
+                } else {
+                    display.innerHTML = `${currentWaitMins} Mins (Standard)`;
+                }
+            }
+        }
 
         function enterStudio() {
             document.getElementById('loader').style.opacity = '0';
@@ -198,6 +196,7 @@
             hoverSound.play().then(() => { hoverSound.pause(); hoverSound.currentTime = 0; });
             heroVideo.play();
             AOS.init({ duration: 1000, once: false, mirror: true });
+            updateWaitTime();
         }
 
         function playClick() { clickSound.currentTime = 0; clickSound.volume = 0.4; clickSound.play(); }
@@ -208,47 +207,24 @@
 
         window.addEventListener('scroll', () => {
             const scrollPos = window.scrollY;
-            const servicesSection = document.getElementById('services');
-            const mapSection = document.getElementById('map-section');
-            const navServices = document.getElementById('nav-services');
-            const navStudio = document.getElementById('nav-studio');
             const mainNav = document.getElementById('main-nav');
-
             if (scrollPos > 10) { mainNav.classList.add('nav-scrolled'); } 
             else { mainNav.classList.remove('nav-scrolled'); }
-
-            if (scrollPos >= mapSection.offsetTop - 300) {
-                navServices.classList.replace('link-hidden', 'link-active');
-                navStudio.classList.replace('link-active', 'link-hidden');
-            } else if (scrollPos >= servicesSection.offsetTop - 300) {
-                navServices.classList.replace('link-active', 'link-hidden');
-                navStudio.classList.replace('link-hidden', 'link-active');
-            } else {
-                navServices.classList.replace('link-hidden', 'link-active');
-                navStudio.classList.replace('link-active', 'link-hidden');
-            }
-
-            const mapRect = mapSection.getBoundingClientRect();
-            if (mapRect.top < window.innerHeight - 150) { mapSection.classList.add('map-visible'); } 
-            else { mapSection.classList.remove('map-visible'); }
-
-            if (window.innerWidth > 768 && scrollPos >= document.getElementById('trigger-card').offsetTop && !botTriggered) {
-                playClick(); toggleChat(); botTriggered = true;
-            }
+            const mapRect = document.getElementById('map-section').getBoundingClientRect();
+            if (mapRect.top < window.innerHeight - 150) { document.getElementById('map-section').classList.add('map-visible'); } 
+            if (window.innerWidth > 768 && scrollPos >= document.getElementById('trigger-card').offsetTop && !botTriggered) { playClick(); toggleChat(); botTriggered = true; }
         });
 
         const map = L.map('dark-map', { zoomControl: false, attributionControl: false }).setView(coords, 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         L.marker(coords, { icon: L.divIcon({ className: 'red-map-label', html: 'Grooming Lab', iconSize: [120, 20], iconAnchor: [60, 25] }) }).addTo(map);
-        L.circleMarker(coords, { radius: 6, color: 'red', fillColor: 'red', fillOpacity: 0.8 }).addTo(map);
 
         function toggleChat() { document.getElementById('chat-window').classList.toggle('active'); document.getElementById('chat-input').focus(); }
         
         function bookFromCard(serviceName) {
             playClick();
             chatState = "awaiting_service"; 
-            const chatWin = document.getElementById('chat-window');
-            if(!chatWin.classList.contains('active')) chatWin.classList.add('active');
+            document.getElementById('chat-window').classList.add('active');
             const input = document.getElementById('chat-input');
             input.value = serviceName;
             setTimeout(() => { handleChat(); input.focus(); }, 100);
@@ -269,40 +245,40 @@
                 
                 if (chatState === "awaiting_service") {
                     selectedService = userVal;
-                    reply = `EXCELLENT. For ${selectedService}, would you like to:<br>1. JOIN LIVE QUEUE (Wait: ~20m)<br>2. BOOK TIME SLOT`;
+                    reply = `EXCELLENT. Current wait is ~${currentWaitMins}m. Would you like to:<br>1. JOIN LIVE QUEUE<br>2. BOOK TIME SLOT`;
                     chatState = "awaiting_choice";
                 } 
                 else if (chatState === "awaiting_choice") {
                     if (userVal.includes("1") || userVal.toLowerCase().includes("queue")) {
                         bookingType = "queue";
-                        reply = "Joining Live Queue. Please provide your Phone Number for your Digital Token.";
+                        reply = "Joining Live Queue. Note: Appointments may take priority. Please provide your Phone Number.";
                         chatState = "awaiting_phone";
                     } else {
                         bookingType = "appointment";
-                        reply = "Booking Time Slot. What is your preferred time? (e.g., 4:30 PM)";
+                        reply = "Booking Time Slot. What is your preferred time? (e.g., 5:30 PM)";
                         chatState = "awaiting_time";
                     }
                 }
                 else if (chatState === "awaiting_time") {
                     appointmentTime = userVal;
-                    reply = `NOTED: ${appointmentTime}. Finally, please provide your Phone Number to confirm.`;
+                    reply = `NOTED: ${appointmentTime}. Finally, your Phone Number for confirmation?`;
                     chatState = "awaiting_phone";
                 }
                 else if (chatState === "awaiting_phone") {
-                    // PUSH DATA TO SUPABASE
                     const { error } = await sb.from('bookings').insert([{
+                        customer_name: "Web Visitor",
+                        phone: userVal,
                         service: selectedService,
                         booking_type: bookingType,
                         scheduled_time: appointmentTime || "NOW",
-                        phone: userVal,
                         status: 'waiting'
                     }]);
 
                     if (error) {
-                        reply = "SYSTEM ERROR. Please try again later.";
-                        console.error(error);
+                        reply = "SYSTEM ERROR: " + error.message;
                     } else {
-                        reply = `ENTRY RECEIVED. A curator will SMS your ${bookingType === 'queue' ? 'Token' : 'Confirmation for ' + appointmentTime} to ${userVal} shortly.`;
+                        reply = `ENTRY RECEIVED. A curator will SMS you at ${userVal} shortly.`;
+                        updateWaitTime(); // Update time immediately after booking
                     }
                     chatState = "awaiting_service"; 
                     appointmentTime = "";
@@ -312,6 +288,9 @@
                 content.scrollTop = content.scrollHeight;
             }, 800);
         }
+
+        // Refresh wait time every minute
+        setInterval(updateWaitTime, 60000);
     </script>
 </body>
 </html>
